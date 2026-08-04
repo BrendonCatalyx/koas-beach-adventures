@@ -1,0 +1,69 @@
+---
+layout: layouts/base.njk
+title: Become a Beach Ranger
+description: Send in a real beach clean-up mission and earn your badge.
+permalink: /rangers/
+extraStyles: |
+  .mission-panel{ background:var(--teal); color:#fff; border-radius:24px; padding:44px; display:flex; gap:40px; flex-wrap:wrap; margin-top:20px; }
+  .mission-panel h2{ font-size:1.5rem; color:#fff; }
+  .mission-panel .steps{ flex:1 1 280px; }
+  .mission-panel .steps ol{ padding-left:20px; margin:16px 0; }
+  .mission-panel .steps li{ margin-bottom:10px; }
+  .mission-form{ flex:1 1 300px; background:#fff; border-radius:16px; padding:24px; color:var(--ink); }
+  .mission-form label{ display:block; font-size:.85rem; font-weight:700; margin:14px 0 6px; color:var(--teal-dark); }
+  .mission-form input, .mission-form textarea{ width:100%; padding:10px 12px; border-radius:10px; border:1.5px solid #d8d0bd; font-family:'Nunito',sans-serif; font-size:.95rem; }
+  .mission-form textarea{ min-height:80px; resize:vertical; }
+  .mission-form .btn{ margin-top:16px; width:100%; }
+  .hp{ position:absolute; left:-9999px; }
+extraScripts: |
+  const form = document.querySelector('.mission-form');
+  if(form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const data = new FormData(form);
+      fetch('/', { method:'POST', body:new URLSearchParams(data) })
+        .then(()=>{ form.innerHTML = '<p style="font-family:\'Fredoka\',sans-serif;font-size:1.2rem;color:var(--teal-dark);">Mission received! 🎖️ Check your email for your badge.</p>'; })
+        .catch(()=>{ alert('Something went wrong — please try again.'); });
+    });
+  }
+---
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Join In, For Real</span>
+    <h1>Become a Beach Ranger</h1>
+    <p>You've explored Koa's world — here's how to help take care of the real one. Grab your gear, send in a mission, and earn your badge.</p>
+  </div>
+</div>
+
+<section class="wrap" style="padding-top:0;">
+  <div class="badge-row reveal in">
+    <div class="badge"><div class="patch bronze">1</div><h3>Bronze Ranger</h3><p>Your first mission report — welcome to the crew.</p></div>
+    <div class="badge"><div class="patch silver">5</div><h3>Silver Ranger</h3><p>Five missions in. You know a clean beach when you see one.</p></div>
+    <div class="badge"><div class="patch gold">10+</div><h3>Gold Ranger</h3><p>Ten missions and counting — plus a printable colouring page every month.</p></div>
+  </div>
+
+  <div class="mission-panel reveal in">
+    <div class="steps">
+      <h2>Send your mission report</h2>
+      <ol>
+        <li>Head to a beach, river, or park near you.</li>
+        <li>Pick up what doesn't belong — even a few pieces count.</li>
+        <li>Snap a photo and tell us what you found.</li>
+        <li>Get your badge instantly. Photos join the gallery after a quick check.</li>
+      </ol>
+    </div>
+    <form class="mission-form" name="ranger-mission" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="ranger-mission">
+      <p class="hp"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <label for="ranger-name">Ranger name</label>
+      <input id="ranger-name" name="name" required>
+      <label for="ranger-email">Email</label>
+      <input id="ranger-email" type="email" name="email" required>
+      <label for="ranger-location">Where was your mission?</label>
+      <input id="ranger-location" name="location" placeholder="e.g. Local beach, river, park">
+      <label for="ranger-report">What did you find?</label>
+      <textarea id="ranger-report" name="report"></textarea>
+      <button type="submit" class="btn">Submit Mission</button>
+    </form>
+  </div>
+</section>

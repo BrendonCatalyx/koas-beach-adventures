@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+title: Meet the Crew
+description: Meet Koa, Gully, and every friend they've made along the way.
+permalink: /crew/
+---
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">The Crew</span>
+    <h1>One family, every coastline</h1>
+    <p>Koa and Gully travel the world's beaches — and everywhere they go, a local friend joins the crew.</p>
+  </div>
+</div>
+<section class="wrap" style="padding-top:0;">
+  <div class="grid-cards">
+    {% for c in characters %}
+    <a href="/crew/{{ c.slug }}/" class="entity-card reveal in">
+      <div class="art" style="background:{{ c.swatch }};">{% characterAvatar c, 120 %}</div>
+      <div class="body">
+        <span class="status-chip {{ c.status }}">{{ "Live" if c.status == "live" else ("Coming soon" if c.status == "in-production" else "Future friend") }}</span>
+        <h3>{{ c.name }}</h3>
+        <p>{{ c.role }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>

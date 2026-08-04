@@ -1,0 +1,16 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      {% for col in site.footer.columns %}
+      <div class="footer-col">
+        <h4>{{ col.heading }}</h4>
+        {% for link in col.links %}<a href="{{ link.href }}">{{ link.label }}</a>{% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="footer-base">
+      <span>© {{ site.siteName }} — CatalyxKids</span>
+      <span>{{ site.footer.baseNote }}</span>
+    </div>
+  </div>
+</footer>

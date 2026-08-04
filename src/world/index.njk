@@ -1,0 +1,36 @@
+---
+layout: layouts/base.njk
+title: Explore the World
+description: Twenty destinations, live today and still to come.
+permalink: /world/
+---
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Explore</span>
+    <h1>Where will Koa go next?</h1>
+    <p>Twenty destinations, all part of the same journey — the ones you can visit today, and the ones still ahead.</p>
+  </div>
+</div>
+<section class="wrap" style="padding-top:0;">
+  <div class="map-frame reveal in" style="margin-bottom:48px;">
+    {% for d in destinations %}
+    <a href="/world/{{ d.slug }}/" class="map-pin {{ 'live' if (d.status == 'live' or d.status == 'in-production') else 'planned' }}" style="left:{{ d.mapX }}%; top:{{ d.mapY }}%;">
+      <span class="tip">{{ d.name }}</span>
+      <span class="dot"></span>
+    </a>
+    {% endfor %}
+  </div>
+  <div class="grid-cards">
+    {% for d in destinations %}
+    {% set tileColor = "#B9C6C2" if d.status == "planned" else "#4A7A7A" %}
+    <a href="/world/{{ d.slug }}/" class="entity-card reveal in">
+      <div class="art">{% tileArt tileColor, d.name %}</div>
+      <div class="body">
+        <span class="status-chip {{ d.status }}">{{ "Live" if d.status == "live" else ("Coming soon" if d.status == "in-production" else "Future destination") }}</span>
+        <h3>{{ d.name }}</h3>
+        <p>{{ d.hook }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>

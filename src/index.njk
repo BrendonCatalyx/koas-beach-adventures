@@ -1,0 +1,222 @@
+---
+layout: layouts/base.njk
+title: null
+description: null
+permalink: /
+---
+<!-- ================= HERO ================= -->
+<section id="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-copy reveal in">
+      <span class="eyebrow">Koa's Beach Adventures</span>
+      <h1>Come and explore <span>Koa's world</span></h1>
+      <p>Books, friends, real places, and real animals — Koa's been waiting to show you around.</p>
+    </div>
+    <div class="hero-scene reveal in">
+      <svg viewBox="0 0 200 200" aria-label="Koa the koala waving hello">
+        <circle cx="100" cy="120" r="70" fill="#C9A46C"/>
+        <circle cx="100" cy="120" r="70" fill="#000" opacity=".04"/>
+        <circle cx="70" cy="70" r="20" fill="#C9A46C"/>
+        <circle cx="130" cy="70" r="20" fill="#C9A46C"/>
+        <circle cx="70" cy="70" r="10" fill="#EADFC8"/>
+        <circle cx="130" cy="70" r="10" fill="#EADFC8"/>
+        <circle cx="85" cy="112" r="5" fill="#2B2622"/>
+        <circle cx="115" cy="112" r="5" fill="#2B2622"/>
+        <path d="M90,130 Q100,138 110,130" stroke="#2B2622" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M50,150 Q35,120 55,100" stroke="#C9A46C" stroke-width="16" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div class="hero-bubble" id="hero-bubble">Oh — hi! I didn't see you there. Come on, I'll show you around.</div>
+      <p class="sound-hint">🔊 Tap or scroll to bring Koa's world to life with sound</p>
+    </div>
+  </div>
+  <div class="cloud cloud-a" aria-hidden="true"><svg width="140" height="50" viewBox="0 0 140 50"><ellipse cx="35" cy="30" rx="35" ry="18" fill="#fff"/><ellipse cx="75" cy="20" rx="30" ry="20" fill="#fff"/><ellipse cx="105" cy="30" rx="28" ry="16" fill="#fff"/></svg></div>
+  <div class="cloud cloud-b" aria-hidden="true"><svg width="140" height="50" viewBox="0 0 140 50"><ellipse cx="35" cy="30" rx="35" ry="18" fill="#fff"/><ellipse cx="75" cy="20" rx="30" ry="20" fill="#fff"/><ellipse cx="105" cy="30" rx="28" ry="16" fill="#fff"/></svg></div>
+  <div class="cloud cloud-c" aria-hidden="true"><svg width="140" height="50" viewBox="0 0 140 50"><ellipse cx="35" cy="30" rx="35" ry="18" fill="#fff"/><ellipse cx="75" cy="20" rx="30" ry="20" fill="#fff"/><ellipse cx="105" cy="30" rx="28" ry="16" fill="#fff"/></svg></div>
+  <div class="tide" aria-hidden="true">
+    <svg viewBox="0 0 1440 220" preserveAspectRatio="none">
+      <path class="tide-wave" fill="#DCEAE6" d="M0,80 C240,140 480,20 720,70 C960,120 1200,40 1440,90 L1440,220 L0,220 Z"/>
+      <path fill="var(--cream)" d="M0,130 C240,180 480,110 720,140 C960,170 1200,120 1440,150 L1440,220 L0,220 Z"/>
+    </svg>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">Scroll to explore ▾</div>
+</section>
+
+<div id="chapter-boat" class="boat-marker bob" style="position:absolute; left:18px; z-index:5;" aria-hidden="true">{% boat 64, true %}</div>
+
+<!-- ================= COLD OPEN ================= -->
+<section id="cold-open" data-chapter>
+  <div class="chapter-divider"><span class="line"></span><span class="label">Chapter One</span><span class="line"></span></div>
+  <div class="wrap cold-open-grid">
+    <div class="cold-open-art reveal">
+      <div class="gully-gag" tabindex="0">
+        <svg viewBox="0 0 200 160" aria-label="Koa and Gully the seagull, tangled up as usual">
+          <circle cx="70" cy="90" r="55" fill="#C9A46C"/>
+          <circle cx="150" cy="60" r="22" fill="#DCE4DC"/>
+          <path d="M150,60 l16,-6 l-4,10 z" fill="#D9A441"/>
+          <path d="M128,72 Q140,50 165,55" stroke="#B8935A" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="gag-note">Gully insists this was intentional.</span>
+      </div>
+    </div>
+    <div class="cold-open-copy reveal">
+      <span class="eyebrow">Meet Koa</span>
+      <h2>"I'll help care for your home — if you'll show it to me."</h2>
+      <p>That's Koa's promise, every single time he lands somewhere new. Right now his first mate is a seagull called Gully, who is silly, a little clumsy, and completely unbothered by either.</p>
+      <a href="/crew/koa/" class="btn ghost" style="margin-top:18px;">Meet Koa properly →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CREW TEASER ================= -->
+<section id="crew-teaser" data-chapter>
+  <div class="wrap reveal">
+    <span class="eyebrow" style="color:var(--mustard);">And everywhere he goes...</span>
+    <h2>...a new friend joins the crew</h2>
+    <p style="max-width:56ch;margin:14px auto 0;color:#CFE3DF;">Koa and Gully travel the Pacific coastline by coastline — and somebody new is always waiting.</p>
+  </div>
+  <div class="shore">
+    <div class="shore-line reveal-group reveal">
+      {% for c in characters %}{% if c.status == "live" or c.status == "in-production" %}
+      <a href="/crew/{{ c.slug }}/" class="crew-mini{% if c.slug == 'gully' %} gully{% endif %}">
+        <div class="avatar">{% characterAvatar c, (44 if c.slug == "gully" else 88) %}</div>
+        <span>{{ c.name }}</span>
+      </a>
+      {% endif %}{% endfor %}
+    </div>
+  </div>
+  <p class="shore-caption">Tap anyone in the crew to find out more about them.</p>
+</section>
+
+<!-- ================= EXPLORE ================= -->
+<section id="explore-teaser" data-chapter>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Explore</span>
+      <h2>Where will Koa go next?</h2>
+      <p>Every stop on Koa's route — the ones you can visit today, and the ones still to come.</p>
+    </div>
+    <div class="map-frame reveal">
+      {% for d in destinations %}
+      <a href="/world/{{ d.slug }}/" class="map-pin {{ 'live' if (d.status == 'live' or d.status == 'in-production') else 'planned' }}" style="left:{{ d.mapX }}%; top:{{ d.mapY }}%;">
+        <span class="tip">{{ d.name }}</span>
+        <span class="dot"></span>
+      </a>
+      {% endfor %}
+      <div id="boat-transit" style="left:{{ destinations[0].mapX }}%; top:{{ destinations[0].mapY - 8 }}%;">{% boat 40, true %}</div>
+    </div>
+    <p style="text-align:center;margin-top:18px;"><a href="/world/" class="btn ghost">See the full map →</a></p>
+  </div>
+</section>
+
+<!-- ================= WATCH ================= -->
+<section id="watch-teaser" data-chapter>
+  <div class="wrap">
+    <div class="section-head on-dark reveal">
+      <span class="eyebrow" style="color:var(--mustard);">Watch</span>
+      <h2>Step into the adventure</h2>
+    </div>
+    <div class="video-row reveal-group reveal">
+      {% from "partials/video-card.njk" import card as videoCard %}
+      {% set featured = videosFor(videos, { featuredOnly: true }) %}
+      {% for v in featured %}{{ videoCard(v, characters) }}{% endfor %}
+    </div>
+    <p style="text-align:center;margin-top:28px;"><a href="/watch/" class="btn ghost on-dark">Watch more →</a></p>
+  </div>
+</section>
+
+<!-- ================= READ ================= -->
+<section id="read-teaser" data-chapter>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Read</span>
+      <h2>The adventures so far</h2>
+      <p>Each book follows Koa and Gully to a new coastline, with a new friend and a new place to discover.</p>
+    </div>
+    <div class="book-row reveal-group reveal">
+      {% for b in books %}{% if loop.index <= 3 %}
+      <a href="/books/{{ b.slug }}/" class="book-card">
+        <div class="book-cover" style="background:linear-gradient(135deg, var(--teal), var(--teal-dark)); color:#fff;">{{ b.title }}</div>
+        <span class="{{ 'tag-live' if b.status == 'live' else 'tag-soon' }}">{{ "Available now" if b.status == "live" else ("Coming soon" if b.status == "in-production" else "In the works") }}</span>
+        <h3>{{ b.title }}</h3>
+        <p>{{ b.blurb }}</p>
+      </a>
+      {% endif %}{% endfor %}
+    </div>
+    <p style="text-align:center;margin-top:28px;"><a href="/books/" class="btn ghost">See the whole series →</a></p>
+  </div>
+</section>
+
+<!-- ================= PLAY ================= -->
+<section id="play-teaser" data-chapter>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Play</span>
+      <h2>Grab your crayons</h2>
+    </div>
+    <div class="play-row reveal-group reveal">
+      <div class="play-card">
+        <h3>Colouring Corner</h3>
+        <p>Free and printable pages starring the whole crew.</p>
+        <a href="/play/#colouring" class="btn small">Start colouring</a>
+      </div>
+      <div class="play-card">
+        <h3>Character Passports</h3>
+        <p>Download, print, and collect a passport for every friend you meet.</p>
+        <a href="/play/#passports" class="btn small">Collect a passport</a>
+      </div>
+    </div>
+
+    {% set dykFacts = didYouKnowFacts(destinations) %}
+    <div class="dyk reveal" id="dyk-widget" style="margin-top:44px;" role="button" tabindex="0" aria-label="Tap for another wildlife fact">
+      <div class="badge-icon">{% shell %}</div>
+      <div><h3>Did You Know?</h3><p class="dyk-text">{{ dykFacts[0] }}</p></div>
+    </div>
+    <script type="application/json" id="dyk-facts">{{ dykFacts | dump | safe }}</script>
+  </div>
+</section>
+
+<!-- ================= RANGERS ================= -->
+<section id="rangers-teaser" data-chapter>
+  <div class="wrap reveal">
+    <span class="eyebrow">Join In, For Real</span>
+    <h2>Become a Beach Ranger</h2>
+    <p style="max-width:56ch;margin:14px auto 0;">Once you've explored Koa's world, here's how to help take care of the real one.</p>
+    <div class="badge-row">
+      <div class="badge"><div class="patch bronze">1</div><h3>Bronze Ranger</h3><p>Your first mission report.</p></div>
+      <div class="badge"><div class="patch silver">5</div><h3>Silver Ranger</h3><p>Five missions in.</p></div>
+      <div class="badge"><div class="patch gold">10+</div><h3>Gold Ranger</h3><p>Ten missions and counting.</p></div>
+    </div>
+    <a href="/rangers/" class="btn">Find out how →</a>
+  </div>
+</section>
+
+<!-- ================= BEACH SHACK ================= -->
+<section id="shop-teaser" data-chapter>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Take a Piece Home</span>
+      <h2>The Beach Shack</h2>
+    </div>
+    <div class="shop-row reveal-group reveal">
+      <div class="shop-card">
+        <h3>Prints, badges & crew merch</h3>
+        <p>A little something from every adventure — a portion of every sale funds the development of Catalyx One.</p>
+        <a href="/beach-shack/" class="btn">Visit the Beach Shack →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOLLOW ================= -->
+<section id="follow" data-chapter>
+  <div class="wrap reveal">
+    <span class="eyebrow">Real Families, Real Adventures</span>
+    <h2>Follow along</h2>
+    <p style="max-width:52ch;margin:14px auto 0;">Koa's world keeps growing — see what other families are discovering.</p>
+    <div class="follow-row">
+      {% for s in site.social %}
+      <a href="{{ s.href }}" class="follow-icon" rel="noopener">{{ s.icon }} {{ s.label }}</a>
+      {% endfor %}
+    </div>
+  </div>
+</section>

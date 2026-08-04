@@ -1,0 +1,10 @@
+# ============================================================
+# NETLIFY REDIRECTS
+# ============================================================
+# Almost nothing needed here anymore. Under the static-HTML version, this
+# file did the heavy lifting (rewriting /crew/koa onto crew.html?c=koa).
+# Eleventy now generates a REAL /crew/koa/index.html at build time, so
+# Netlify serves it directly — no rewrite rule required.
+#
+# Custom 404 page (Netlify convention: this exact line, exact status code)
+/*  /404.html  404

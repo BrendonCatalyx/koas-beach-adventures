@@ -1,0 +1,57 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: destinations
+  size: 1
+  alias: destination
+permalink: "/world/{{ destination.slug }}/"
+eleventyComputed:
+  title: "{{ destination.name | safe }}"
+  description: "{{ destination.hook | safe }}"
+  ogType: website
+  jsonld: >-
+    {% if destination.status != "planned" %}{"@context":"https://schema.org","@type":"Place","name":{{ destination.name | dump | safe }},"description":{{ destination.hook | dump | safe }}}{% endif %}
+---
+{% from "partials/related.njk" import block as relatedBlock %}
+{% from "partials/video-card.njk" import card as videoCard %}
+<div class="wrap">
+  <a href="/world/" class="btn ghost small" style="margin-top:24px;">← The whole map</a>
+
+  <div class="detail-hero">
+    <div class="detail-art reveal in">
+      <div class="art-frame">{% tileArt "#4A7A7A", destination.name %}</div>
+    </div>
+    <div class="detail-copy reveal in">
+      <span class="eyebrow">{{ destination.region }}</span>
+      <h1>{{ destination.name }}</h1>
+      <span class="status-chip {{ destination.status }}" style="margin-top:8px;">{{ "Live" if destination.status == "live" else ("Coming soon" if destination.status == "in-production" else "Future destination") }}</span>
+      <p class="bio">{{ destination.hook }}</p>
+    </div>
+  </div>
+
+  {% if destination.status == "planned" %}
+    <p style="margin:24px 0;">This part of the world hasn't been explored yet — check back when the book publishes.</p>
+  {% else %}
+    {% if destination.wildlife and destination.wildlife.length %}
+    <h3>Wildlife to look out for</h3>
+    <ul class="fun-facts">{% for w in destination.wildlife %}<li>{{ w }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% if destination.culture %}<h3>The place itself</h3><p>{{ destination.culture }}</p>{% endif %}
+    {% if destination.didYouKnow %}
+    <div class="dyk" style="margin-top:24px;">
+      <div class="badge-icon">{% shell %}</div>
+      <div><h3>Did You Know?</h3><p>{{ destination.didYouKnow }}</p></div>
+    </div>
+    {% endif %}
+  {% endif %}
+
+  {% set relatedVideos = videosFor(videos, { destinationSlug: destination.slug }) %}
+  {% if relatedVideos.length %}
+  <h3 style="margin-top:32px;">Watch {{ destination.name }}</h3>
+  <div class="video-row">
+    {% for v in relatedVideos %}{{ videoCard(v, characters) }}{% endfor %}
+  </div>
+  {% endif %}
+
+  {{ relatedBlock("destination", destination.slug, characters, destinations, books) }}
+</div>

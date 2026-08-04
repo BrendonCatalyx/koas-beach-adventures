@@ -1,0 +1,55 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: characters
+  size: 1
+  alias: character
+permalink: "/crew/{{ character.slug }}/"
+eleventyComputed:
+  title: "{{ character.name | safe }}"
+  description: "{{ character.bio | safe }}"
+  ogType: profile
+---
+{% from "partials/related.njk" import block as relatedBlock %}
+{% from "partials/video-card.njk" import card as videoCard %}
+<div class="wrap">
+  <a href="/crew/" class="btn ghost small" style="margin-top:24px;">← All of the crew</a>
+
+  <div class="detail-hero">
+    <div class="detail-art reveal in">
+      <div class="art-frame" style="background:{{ character.swatch }};">{% characterAvatar character, 220 %}</div>
+    </div>
+    <div class="detail-copy reveal in">
+      <span class="eyebrow">{{ character.species }}</span>
+      <h1>{{ character.name }}</h1>
+      <p class="role">{{ character.role }}</p>
+      <p class="bio">{{ character.bio }}</p>
+    </div>
+  </div>
+
+  {% if character.status == "planned" %}
+    <p style="margin:24px 0;">This friend hasn't been introduced yet — check back when this book publishes.</p>
+  {% else %}
+    <div class="fact-grid reveal in">
+      <div class="fact-card"><div class="label">Home</div><div class="value">{{ character.home }}</div></div>
+      <div class="fact-card"><div class="label">Favourite food</div><div class="value">{{ character.favouriteFood or "—" }}</div></div>
+      <div class="fact-card"><div class="label">Favourite beach</div><div class="value">{{ character.favouriteBeach or "—" }}</div></div>
+      <div class="fact-card"><div class="label">Favourite saying</div><div class="value">"{{ character.favouriteSaying or "—" }}"</div></div>
+    </div>
+    <h3>Fun facts</h3>
+    <ul class="fun-facts">
+      {% for f in character.funFacts %}<li>{{ f }}</li>{% endfor %}
+    </ul>
+    <p><a href="/play/#passports" class="btn small">Download {{ character.name }}'s Passport</a></p>
+  {% endif %}
+
+  {% set relatedVideos = videosFor(videos, { characterSlug: character.slug }) %}
+  {% if relatedVideos.length %}
+  <h3 style="margin-top:32px;">Watch {{ character.name }}</h3>
+  <div class="video-row">
+    {% for v in relatedVideos %}{{ videoCard(v, characters) }}{% endfor %}
+  </div>
+  {% endif %}
+
+  {{ relatedBlock("character", character.slug, characters, destinations, books) }}
+</div>

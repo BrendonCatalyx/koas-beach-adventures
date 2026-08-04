@@ -1,0 +1,46 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: books
+  size: 1
+  alias: book
+permalink: "/books/{{ book.slug }}/"
+eleventyComputed:
+  title: "{{ book.title | safe }}"
+  description: "{{ book.blurb | safe }}"
+  ogType: book
+  jsonld: >-
+    {"@context":"https://schema.org","@type":"Book","name":{{ book.title | dump | safe }},"description":{{ book.blurb | dump | safe }},"position":{{ book.seriesNumber }},"isPartOf":{"@type":"BookSeries","name":{{ site.siteName | dump | safe }}}}
+---
+{% from "partials/related.njk" import block as relatedBlock %}
+{% from "partials/video-card.njk" import card as videoCard %}
+<div class="wrap">
+  <a href="/books/" class="btn ghost small" style="margin-top:24px;">← The whole series</a>
+
+  <div class="detail-hero">
+    <div class="detail-art reveal in">
+      <div class="art-frame">{% tileArt "#1F3438", book.title %}</div>
+    </div>
+    <div class="detail-copy reveal in">
+      <span class="eyebrow">Book {{ book.seriesNumber }} of 20</span>
+      <h1>{{ book.title }}</h1>
+      <span class="status-chip {{ book.status }}" style="margin-top:8px;">{{ "Available now" if book.status == "live" else ("Coming soon" if book.status == "in-production" else "In the works") }}</span>
+      <p class="bio">{{ book.blurb }}</p>
+      {% if book.amazonUrl %}
+      <a href="{{ book.amazonUrl }}" class="btn" target="_blank" rel="noopener" style="margin-top:20px;">Get it on Amazon</a>
+      {% else %}
+      <a href="#" class="btn ghost" aria-disabled="true" style="margin-top:20px;">In the works</a>
+      {% endif %}
+    </div>
+  </div>
+
+  {% set relatedVideos = videosFor(videos, { bookSlug: book.slug }) %}
+  {% if relatedVideos.length %}
+  <h3 style="margin-top:32px;">Watch</h3>
+  <div class="video-row">
+    {% for v in relatedVideos %}{{ videoCard(v, characters) }}{% endfor %}
+  </div>
+  {% endif %}
+
+  {{ relatedBlock("book", book.slug, characters, destinations, books) }}
+</div>

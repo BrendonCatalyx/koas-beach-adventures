@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+title: Read the Adventures
+description: The full 20-book series, in order.
+permalink: /books/
+---
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Read</span>
+    <h1>The adventures, in order</h1>
+    <p>Twenty books, twenty destinations — each one following Koa and Gully to somewhere new.</p>
+  </div>
+</div>
+<section class="wrap" style="padding-top:0;">
+  <div class="grid-cards">
+    {% for b in books %}
+    <a href="/books/{{ b.slug }}/" class="entity-card reveal in">
+      <div class="art" style="background:linear-gradient(135deg, var(--teal), var(--teal-dark)); color:#fff; font-family:'Fredoka',sans-serif; text-align:center; padding:16px;">{{ b.title }}</div>
+      <div class="body">
+        <span class="status-chip {{ b.status }}">{{ "Available now" if b.status == "live" else ("Coming soon" if b.status == "in-production" else "In the works") }}</span>
+        <h3>Book {{ b.seriesNumber }} · {{ b.title }}</h3>
+        <p>{{ b.blurb }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>

@@ -1,0 +1,39 @@
+---
+layout: layouts/base.njk
+title: Watch
+description: Cinematic animations from Koa's world.
+permalink: /watch/
+extraStyles: |
+  .watch-category{ margin-bottom:56px; }
+  .watch-category h2{ color:var(--teal-dark); font-size:1.4rem; margin-bottom:18px; }
+  .watch-empty{ color:#888; font-size:.95rem; }
+---
+{% from "partials/video-card.njk" import card as videoCard %}
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Watch</span>
+    <h1>Step into the adventure</h1>
+    <p>Silent until you choose sound — tap anything below to bring it to life.</p>
+  </div>
+</div>
+
+<section class="wrap" style="padding-top:0;">
+  {% set categoryLabels = {
+    "meet-the-crew": "Meet the Crew",
+    "destinations": "Somewhere New",
+    "adventure-moments": "Adventure Moments",
+    "behind-the-adventure": "Behind the Adventure",
+    "shorts": "Shorts"
+  } %}
+  {% for catKey, catLabel in categoryLabels %}
+    {% set catVideos = videosFor(videos, { category: catKey }) %}
+    {% if catVideos.length %}
+    <div class="watch-category">
+      <h2>{{ catLabel }}</h2>
+      <div class="video-row">
+        {% for v in catVideos %}{{ videoCard(v, characters) }}{% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  {% endfor %}
+</section>

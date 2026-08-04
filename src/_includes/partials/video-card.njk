@@ -1,0 +1,48 @@
+{#
+  Video card macro. One definition, used on the homepage, /watch/, and
+  every character/destination/book detail page's Videos section — this is
+  what makes "no template changes, just drop in the file" actually true.
+
+  States handled:
+  - self-hosted, file exists on disk  → real <video>, lazy-loaded via IO
+  - youtube, youtubeId set            → facade thumbnail, real iframe on click
+  - anything else                     → "awaiting export" placeholder card,
+                                          same visual language as before so
+                                          nothing looks broken pre-launch
+#}
+{% macro card(video, characters) %}
+{% set status = resolveVideoStatus(video) %}
+{% set hasPoster = posterExists(video) %}
+<div class="video-card" id="video-{{ video.slug }}" data-video-slug="{{ video.slug }}">
+  {% if status == "live" and video.source == "self-hosted" %}
+    <div class="frame video-frame">
+      <video
+        class="js-lazy-video"
+        muted loop playsinline preload="none"
+        data-src="{{ video.file }}"
+        {% if hasPoster %}poster="{{ video.poster }}"{% endif %}
+        aria-label="{{ video.title }}"
+      ></video>
+      {% if not hasPoster %}<div class="video-poster-fallback" style="background:linear-gradient(135deg, var(--teal), var(--teal-dark));"></div>{% endif %}
+      <button class="video-sound-toggle" type="button" aria-label="Toggle sound" data-video-slug="{{ video.slug }}">🔇</button>
+      {% if video.duration %}<span class="video-duration">{{ video.duration }}</span>{% endif %}
+    </div>
+  {% elif status == "live" and video.source == "youtube" %}
+    <div class="frame video-frame youtube-facade" data-youtube-id="{{ video.youtubeId }}" role="button" tabindex="0" aria-label="Play {{ video.title }}">
+      {% if hasPoster %}
+        <img src="{{ video.poster }}" alt="" loading="lazy">
+      {% else %}
+        <div class="video-poster-fallback" style="background:linear-gradient(135deg, var(--teal), var(--teal-dark));"></div>
+      {% endif %}
+      <span class="youtube-play-btn">▶</span>
+    </div>
+  {% else %}
+    <div class="frame" style="background:linear-gradient(135deg,#B8935A,#8a6c3f); color:#fff; position:relative;">
+      ▶
+      <span class="awaiting-export-badge">🎬 Awaiting export</span>
+    </div>
+  {% endif %}
+  <h3 style="color:var(--teal-dark);">{{ video.title }}</h3>
+  <p style="color:#666;">{{ video.caption }}</p>
+</div>
+{% endmacro %}

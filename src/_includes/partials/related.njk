@@ -1,0 +1,13 @@
+{% macro block(type, slug, characters, destinations, books) %}
+{% set items = getRelated(type, slug, characters, destinations, books) %}
+{% if items.length %}
+<div class="continue-row">
+  <h3>Continue the adventure</h3>
+  <div class="continue-links">
+    {% for item in items %}
+    <a href="{{ item.href }}" class="btn small ghost on-dark">{{ item.icon }} {{ item.label }} →</a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endmacro %}

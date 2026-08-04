@@ -1,0 +1,97 @@
+---
+layout: layouts/base.njk
+title: Play
+description: Free colouring pages and printable Character Passports.
+permalink: /play/
+extraStyles: |
+  .page-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; }
+  .colour-card, .passport-card{ background:#fff; border-radius:var(--radius); padding:18px; box-shadow:var(--shadow-card); display:flex; flex-direction:column; gap:12px; }
+  .colour-card .thumb, .passport-card .thumb{ border-radius:12px; aspect-ratio:1/1; overflow:hidden; }
+  .price-badge{ align-self:flex-start; font-family:'Fredoka',sans-serif; font-size:.7rem; padding:4px 10px; border-radius:999px; }
+  .price-badge.free{ background:var(--sage); color:#173322; }
+  .price-badge.paid{ background:var(--mustard); color:#3a2f10; }
+  .bundle-banner{ margin-top:44px; background:var(--teal-dark); color:#fff; border-radius:24px; padding:32px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+  .bundle-banner h3{ color:#fff; }
+  .bundle-banner p{ margin:6px 0 0; color:#CFE3DF; max-width:44ch; }
+  .passport-card .fields{ font-size:.85rem; color:#555; display:flex; flex-direction:column; gap:4px; }
+  .passport-card .fields b{ color:var(--teal-dark); }
+---
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Play</span>
+    <h1>Grab your crayons</h1>
+    <p>Free colouring pages, printable Character Passports, and more activities on the way.</p>
+  </div>
+</div>
+
+<section class="wrap" id="colouring" style="padding-top:0;">
+  <div class="section-head reveal in">
+    <span class="eyebrow">Free</span>
+    <h2>Start here — on us</h2>
+  </div>
+  <div class="page-grid">
+    <div class="colour-card reveal in">
+      <div class="thumb">{% tileArt "#C9A46C", "Koa at the Beach" %}</div>
+      <span class="price-badge free">Free</span>
+      <h3 style="color:var(--teal-dark);">Koa at the Beach</h3>
+      <p style="color:#666;font-size:.9rem;">Koa and his surfboard, ready for a new adventure.</p>
+      <a href="#" class="btn small">Download Free</a>
+    </div>
+  </div>
+
+  <div class="section-head reveal in" style="margin-top:48px;">
+    <span class="eyebrow">$2 Each</span>
+    <h2>More to unlock — supports Catalyx One</h2>
+  </div>
+  {% set paidPages = [
+    { title: "Gully Being Gully", desc: "Mid-flap, mid-mischief.", link: "https://buy.stripe.com/6oU3cv2CH4d5eGI22K33W0c", color: "#DCE4DC" },
+    { title: "The Byron Bay Crew", desc: "Koa, Gully, and Dune at the lighthouse.", link: "https://buy.stripe.com/bJe3cvcdhcJB7egfTA33W0d", color: "#B8935A" },
+    { title: "Moku Catches a Wave", desc: "Hawaii's toughest surfer, paddling out.", link: "https://buy.stripe.com/8x28wP7X110TdCE5eW33W0e", color: "#7C8B6F" },
+    { title: "Dune Reads the Tides", desc: "Byron Bay's sharpest eyes.", link: "https://buy.stripe.com/00wfZh915cJB1TW4aS33W0f", color: "#B8935A" },
+    { title: "Boko & Guss", desc: "The Solomon Islands' lagoon-and-forest duo.", link: "https://buy.stripe.com/bJe7sL915391cyA22K33W0g", color: "#8FA08C" }
+  ] %}
+  <div class="page-grid">
+    {% for p in paidPages %}
+    <div class="colour-card reveal in">
+      <div class="thumb">{% tileArt p.color, p.title %}</div>
+      <span class="price-badge paid">$2</span>
+      <h3 style="color:var(--teal-dark);">{{ p.title }}</h3>
+      <p style="color:#666;font-size:.9rem;">{{ p.desc }}</p>
+      <a href="{{ p.link }}" class="btn small" target="_blank" rel="noopener">Unlock — $2</a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="bundle-banner reveal in">
+    <div>
+      <h3>Want all 5 for less?</h3>
+      <p>Unlock the whole set for $6 instead of $10.</p>
+    </div>
+    <a href="https://buy.stripe.com/14A3cv6SX391gOQgXE33W0h" class="btn accent" target="_blank" rel="noopener">Unlock All 5 — $6</a>
+  </div>
+  <p style="max-width:64ch;margin:36px auto 0;text-align:center;font-size:.95rem;color:#6a5c42;">Every $2 (or $6 for the bundle) is a small, real contribution — it helps fund the development of Catalyx One. <a href="/about/#catalyx-one">Read more about Catalyx One →</a></p>
+</section>
+
+<section class="wrap" id="passports">
+  <div class="section-head reveal in">
+    <span class="eyebrow">Collect</span>
+    <h2>Character Passports</h2>
+    <p>Download, print, and colour a passport for every friend you meet. Leave space at the bottom for a Beach Ranger stamp when that's ready.</p>
+  </div>
+  <div class="page-grid">
+    {% for c in characters %}{% if c.status != "planned" %}
+    <div class="passport-card reveal in" data-slug="{{ c.slug }}" id="passport-{{ c.slug }}">
+      <div class="thumb" style="background:{{ c.swatch }};">{% characterAvatar c, 160 %}</div>
+      <h3 style="color:var(--teal-dark);">{{ c.name }}</h3>
+      <div class="fields">
+        <span><b>Species:</b> {{ c.species }}</span>
+        <span><b>Home:</b> {{ c.home }}</span>
+        <span><b>Favourite beach:</b> {{ c.favouriteBeach or "—" }}</span>
+        <span><b>Favourite food:</b> {{ c.favouriteFood or "—" }}</span>
+        <span><b>Favourite saying:</b> "{{ c.favouriteSaying or "—" }}"</span>
+      </div>
+      <button class="btn small no-print" onclick="printPassport('{{ c.slug }}')">🖨️ Print this passport</button>
+    </div>
+    {% endif %}{% endfor %}
+  </div>
+</section>

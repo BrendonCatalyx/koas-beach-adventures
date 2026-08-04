@@ -1,0 +1,28 @@
+---
+layout: layouts/base.njk
+title: Search
+description: Search across every character, destination, and book in Koa's world.
+permalink: /search/
+extraStyles: |
+  .search-hero{ padding:56px 0 24px; text-align:center; }
+  .search-form{ max-width:520px; margin:24px auto 0; display:flex; gap:10px; }
+  .search-form input{ flex:1; padding:14px 18px; border-radius:999px; border:1.5px solid #d8d0bd; font-size:1rem; font-family:'Nunito',sans-serif; }
+  .result-row{ display:flex; align-items:center; gap:16px; background:#fff; border-radius:var(--radius-sm); padding:16px 18px; box-shadow:var(--shadow-card); text-decoration:none; color:inherit; margin-bottom:12px; }
+  .result-row .type-tag{ font-family:'Fredoka',sans-serif; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; background:var(--cream-deep); color:var(--teal-dark); padding:3px 10px; border-radius:999px; flex-shrink:0; }
+  .result-row h3{ font-size:1.05rem; color:var(--teal-dark); }
+  .result-row p{ margin:2px 0 0; font-size:.88rem; color:#666; }
+---
+<div class="search-hero wrap">
+  <span class="eyebrow">Search</span>
+  <h1 style="color:var(--teal-dark);">Where's Moku?</h1>
+  <p>Search across every character, destination, and book.</p>
+  <form class="search-form" id="search-form" role="search">
+    <label for="q" class="visually-hidden">Search Koa's world</label>
+    <input id="q" name="q" type="search" placeholder="Try “sea turtle”, “Moku”, or “Fiji”">
+    <button class="btn small" type="submit">Search</button>
+  </form>
+</div>
+
+<section class="wrap" style="padding-top:0;max-width:720px;">
+  <div id="results"></div>
+</section>
