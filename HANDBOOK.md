@@ -189,7 +189,7 @@ npm run build
 npx serve _site      # or: cd _site && python3 -m http.server 8080
 ```
 
-**The Ranger mission form** needs Netlify's form detection to pick it up — it will, automatically, because of the `data-netlify="true"` attribute already on the `<form>` in `src/rangers.njk`. Check Netlify's dashboard under "Forms" after your first deploy to confirm it registered.
+
 
 ---
 

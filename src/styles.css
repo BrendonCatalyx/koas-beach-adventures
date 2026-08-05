@@ -198,11 +198,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .gully-flyby-inner img{ width:100%; height:auto; display:block; filter:drop-shadow(0 8px 12px rgba(0,0,0,.22)); animation:gullyFlap .9s ease-in-out infinite; }
 @keyframes gullyFlap{ 0%,100%{ transform:translateY(0) rotate(-3deg); } 50%{ transform:translateY(-6px) rotate(3deg); } }
 @keyframes gullyFlyAcross{
-  0%   { opacity:0; transform:translate(0,0) rotate(-6deg); }
+  0%   { opacity:0; transform:translate(0,0) rotate(-8deg); }
   8%   { opacity:1; }
-  50%  { transform:translate(calc(50vw - 35px), -60px) rotate(4deg); }
+  30%  { transform:translate(calc(30vw - 22px), -34px) rotate(5deg); }
+  55%  { transform:translate(calc(55vw - 38px), -74px) rotate(-3deg); }
+  78%  { transform:translate(calc(78vw - 55px), -30px) rotate(6deg); }
   92%  { opacity:1; }
-  100% { opacity:0; transform:translate(calc(100vw + 120px), 30px) rotate(-4deg); }
+  100% { opacity:0; transform:translate(calc(100vw + 140px), 26px) rotate(-5deg); }
 }
 
 /* Hidden shell — findable, not obviously a button */
@@ -639,4 +641,9 @@ footer.site-footer{ background:var(--teal-dark); color:#CFE3DF; padding:44px 0 2
 .voyage-tags span{
   background:#fff; border-radius:999px; padding:8px 16px; font-family:'Fredoka',sans-serif;
   font-size:.9rem; color:var(--teal-dark); box-shadow:var(--shadow-card);
+}
+
+/* Real book covers are square (8.5x8.5) — contain, never crop titles */
+.art img[src*="/assets/books/"], .published-card-art img[src*="/assets/books/"]{
+  object-fit:contain !important; background:#F5EFE3;
 }

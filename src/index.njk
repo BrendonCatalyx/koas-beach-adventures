@@ -62,8 +62,8 @@ permalink: /
 <!-- Gully occasionally flies across the page — a real surprise, not a static illustration. Triggered from app.js, respects prefers-reduced-motion via the site's existing global rule. -->
 {% set gully = findBySlug(characters, "gully") %}
 <div id="gully-flyby" class="gully-flyby" aria-hidden="true">
-  {% set gullyCutout = characterCutoutPath(gully) %}
-  <div class="gully-flyby-inner">{% if gullyCutout %}<img src="{{ gullyCutout }}" alt="">{% else %}{{ characterArt(gully, 70) }}{% endif %}</div>
+  {% set gullyFlying = "/assets/characters/cutouts/gully-flying.webp" if assetExists("/assets/characters/cutouts/gully-flying.webp") else characterCutoutPath(gully) %}
+  <div class="gully-flyby-inner">{% if gullyFlying %}<img src="{{ gullyFlying }}" alt="">{% else %}{{ characterArt(gully, 70) }}{% endif %}</div>
 </div>
 
 <!-- A hidden shell, findable in the sand — rewards curiosity, not a labelled button -->

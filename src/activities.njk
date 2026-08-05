@@ -1,98 +1,85 @@
 ---
 layout: layouts/base.njk
 title: Activities
-description: Free colouring pages, printables, and activities starring the whole crew.
+description: Free colouring pages and printable Character Passports starring the whole crew.
 permalink: /activities/
 extraStyles: |
   .page-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; }
   .colour-card, .passport-card{ background:#fff; border-radius:var(--radius); padding:18px; box-shadow:var(--shadow-card); display:flex; flex-direction:column; gap:12px; }
-  .colour-card .thumb, .passport-card .thumb{ border-radius:12px; aspect-ratio:1/1; overflow:hidden; }
-  .price-badge{ align-self:flex-start; font-family:'Fredoka',sans-serif; font-size:.7rem; padding:4px 10px; border-radius:999px; }
-  .price-badge.free{ background:var(--sage); color:#173322; }
-  .price-badge.paid{ background:var(--mustard); color:#3a2f10; }
-  .bundle-banner{ margin-top:44px; background:var(--teal-dark); color:#fff; border-radius:24px; padding:32px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
-  .bundle-banner h3{ color:#fff; }
-  .bundle-banner p{ margin:6px 0 0; color:#CFE3DF; max-width:44ch; }
+  .colour-card .thumb{ border-radius:12px; aspect-ratio:3/4; overflow:hidden; background:#fff; border:1px solid #eee; }
+  .colour-card .thumb img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .colour-card h3{ font-size:1.02rem; color:var(--teal-dark); }
+  .passport-card .thumb{ border-radius:12px; aspect-ratio:1/1; overflow:hidden; }
   .passport-card .fields{ font-size:.85rem; color:#555; display:flex; flex-direction:column; gap:4px; }
   .passport-card .fields b{ color:var(--teal-dark); }
+  .btn.download{ text-align:center; }
 ---
+{% from "partials/art.njk" import character as characterArt %}
+
 <div class="page-hero">
   <div class="wrap">
-    <span class="eyebrow">Play</span>
+    <span class="eyebrow">Activities</span>
     <h1>Grab your crayons</h1>
-    <p>Free colouring pages, printable Character Passports, and more activities on the way.</p>
+    <p>Free colouring pages and printable Character Passports — every download is a real page from Koa's world, ready for the fridge door.</p>
   </div>
 </div>
 
 <section class="wrap" id="colouring" style="padding-top:0;">
   <div class="section-head reveal in">
-    <span class="eyebrow">Free</span>
-    <h2>Start here — on us</h2>
+    <span class="eyebrow">Free Colouring Pages</span>
+    <h2>Ten pages, the whole crew</h2>
+    <p>Every page prints on a single A4 sheet. Download, print, colour — done.</p>
   </div>
-  <div class="page-grid">
+  <div class="page-grid" style="margin-top:32px;">
+    {% set colouring = [
+      ["koa-cleans-the-beach", "Koa Cleans the Beach"],
+      ["koa-goes-surfing", "Koa Goes Surfing"],
+      ["gully-by-the-sea", "Gully by the Sea"],
+      ["dune-the-explorer", "Dune the Explorer"],
+      ["mokus-surf-check", "Moku's Surf Check"],
+      ["boko-and-guss-mangroves", "Boko & Guss in the Mangroves"],
+      ["friends-at-byron-bay", "Friends at Byron Bay"],
+      ["koa-at-the-lighthouse", "Koa at the Lighthouse"],
+      ["paddleboarding-with-moku", "Paddleboarding with Moku"],
+      ["beach-day-kombi", "Beach Day with the Kombi"]
+    ] %}
+    {% for p in colouring %}
     <div class="colour-card reveal in">
-      <div class="thumb">{% tileArt "#C9A46C", "Koa at the Beach" %}</div>
-      <span class="price-badge free">Free</span>
-      <h3 style="color:var(--teal-dark);">Koa at the Beach</h3>
-      <p style="color:#666;font-size:.9rem;">Koa and his surfboard, ready for a new adventure.</p>
-      <a href="#" class="btn small">Download Free</a>
-    </div>
-  </div>
-
-  <div class="section-head reveal in" style="margin-top:48px;">
-    <span class="eyebrow">$2 Each</span>
-    <h2>More to unlock</h2>
-  </div>
-  {% set paidPages = [
-    { title: "Gully Being Gully", desc: "Mid-flap, mid-mischief.", link: "https://buy.stripe.com/6oU3cv2CH4d5eGI22K33W0c", color: "#DCE4DC" },
-    { title: "The Byron Bay Crew", desc: "Koa, Gully, and Dune at the lighthouse.", link: "https://buy.stripe.com/bJe3cvcdhcJB7egfTA33W0d", color: "#B8935A" },
-    { title: "Moku Catches a Wave", desc: "Hawaii's toughest surfer, paddling out.", link: "https://buy.stripe.com/8x28wP7X110TdCE5eW33W0e", color: "#7C8B6F" },
-    { title: "Dune Reads the Tides", desc: "Byron Bay's sharpest eyes.", link: "https://buy.stripe.com/00wfZh915cJB1TW4aS33W0f", color: "#B8935A" },
-    { title: "Boko & Guss", desc: "The Solomon Islands' lagoon-and-forest duo.", link: "https://buy.stripe.com/bJe7sL915391cyA22K33W0g", color: "#8FA08C" }
-  ] %}
-  <div class="page-grid">
-    {% for p in paidPages %}
-    <div class="colour-card reveal in">
-      <div class="thumb">{% tileArt p.color, p.title %}</div>
-      <span class="price-badge paid">$2</span>
-      <h3 style="color:var(--teal-dark);">{{ p.title }}</h3>
-      <p style="color:#666;font-size:.9rem;">{{ p.desc }}</p>
-      <a href="{{ p.link }}" class="btn small" target="_blank" rel="noopener">Unlock — $2</a>
+      <div class="thumb"><img src="/assets/printables/previews/{{ p[0] }}.webp" alt="{{ p[1] }} colouring page preview" loading="lazy"></div>
+      <h3>{{ p[1] }}</h3>
+      <a class="btn small download" href="/assets/printables/colouring/{{ p[0] }}.pdf" download>Download Colouring Page (PDF)</a>
     </div>
     {% endfor %}
   </div>
-
-  <div class="bundle-banner reveal in">
-    <div>
-      <h3>Want all 5 for less?</h3>
-      <p>Unlock the whole set for $6 instead of $10.</p>
-    </div>
-    <a href="https://buy.stripe.com/14A3cv6SX391gOQgXE33W0h" class="btn accent" target="_blank" rel="noopener">Unlock All 5 — $6</a>
-  </div>
-  <p style="max-width:64ch;margin:36px auto 0;text-align:center;font-size:.95rem;color:#6a5c42;">Every unlock directly supports the creation of Koa's next adventures.</p>
 </section>
 
 <section class="wrap" id="passports">
   <div class="section-head reveal in">
-    <span class="eyebrow">Collect</span>
+    <span class="eyebrow">Collect Them All</span>
     <h2>Character Passports</h2>
-    <p>Download, print, and colour a passport for every friend you meet.</p>
+    <p>A printable passport for every friend — with their home, their favourites, a space for your name, and a stamp box for when you've met them in the books.</p>
   </div>
-  <div class="page-grid">
-    {% from "partials/art.njk" import character as characterArt %}
-    {% for c in characters %}{% if c.status != "planned" %}
-    <div class="passport-card reveal in" data-slug="{{ c.slug }}" id="passport-{{ c.slug }}">
-      <div class="thumb" style="background:{{ c.swatch }};">{{ characterArt(c, 160) }}</div>
+  <div class="page-grid" style="margin-top:32px;">
+    {% for c in characters %}{% if c.status == "live" %}
+    <div class="passport-card reveal in" id="passport-{{ c.slug }}">
+      <div class="thumb">{{ characterArt(c, 200) }}</div>
       <h3 style="color:var(--teal-dark);">{{ c.name }}</h3>
       <div class="fields">
         <span><b>Species:</b> {{ c.species }}</span>
         <span><b>Home:</b> {{ c.home }}</span>
-        <span><b>Favourite beach:</b> {{ c.favouriteBeach or "—" }}</span>
-        <span><b>Favourite food:</b> {{ c.favouriteFood or "—" }}</span>
-        <span><b>Favourite saying:</b> "{{ c.favouriteSaying or "—" }}"</span>
       </div>
-      <button class="btn small no-print" onclick="printPassport('{{ c.slug }}')">🖨️ Print this passport</button>
+      <a class="btn small download" href="/assets/printables/passports/{{ c.slug }}.pdf" download>Download Passport (PDF)</a>
     </div>
     {% endif %}{% endfor %}
+  </div>
+</section>
+
+<section class="wrap" id="did-you-know" style="padding-bottom:80px;">
+  <div class="dyk reveal in" style="max-width:640px;margin:0 auto;">
+    <div class="badge-icon">{% shell %}</div>
+    <div>
+      <h3>Did you know?</h3>
+      <p>Goannas like Dune can climb trees, sprint on two legs, and smell food from far away with their forked tongues — real Byron Bay locals!</p>
+    </div>
   </div>
 </section>

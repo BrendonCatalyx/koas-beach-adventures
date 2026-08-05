@@ -16,22 +16,22 @@ export default [
   {
     slug: "byron-bay",
     seriesNumber: 1,
-    title: "Home at Byron Bay",
+    title: "Byron Bay",
     status: "live",
     destinationSlug: "byron-bay",
     friendSlug: "dune",
-    blurb: "Koa meets Dune the goanna and learns to read the tides at Cape Byron — and makes a very unlucky new friend in a fishing net along the way.",
-    amazonUrl: "https://amzn.asia/d/0g9QCskr"
+    blurb: "Koa travels the coastlines with a surfboard and a recycling sack — and today, that means Byron Bay: a tangled net, a new friend named Dune, and two little islands hiding a secret out past the waves.",
+    amazonUrl: "https://amzn.asia/d/0auLDoSy"
   },
   {
     slug: "hawaii",
     seriesNumber: 2,
-    title: "Volcano Trails",
+    title: "Waves at Waikiki",
     status: "live",
     destinationSlug: "hawaii",
     friendSlug: "moku",
-    blurb: "Moku the wild boar shows Koa the volcano trails and the honu turtles offshore.",
-    amazonUrl: "https://amzn.asia/d/02ZgX5AX"
+    blurb: "The wind carries Koa to Hawaii: a wild boar named Moku, an island born from fire, and a first wave to catch.",
+    amazonUrl: "https://amzn.asia/d/0bvBruAU"
   },
   {
     slug: "solomon-islands",
@@ -40,8 +40,8 @@ export default [
     status: "live",
     destinationSlug: "solomon-islands",
     friendSlug: "boko",
-    blurb: "A thousand-island journey — Boko and Guss show Koa a lagoon, a forest, and a dugong who needs their help.",
-    amazonUrl: "https://amzn.asia/d/0cMz8rnT"
+    blurb: "Koa sails into the Solomon Islands — nearly a thousand tiny islands! With Boko the laid-back skink and Guss the cheerful cuscus, he helps a gentle dugong and meets one of the rarest owls on Earth.",
+    amazonUrl: "https://amzn.asia/d/0dhrwszM"
   },
   { slug: "fiji", seriesNumber: 4, title: "Fiji", status: "planned", destinationSlug: "fiji", friendSlug: "fiji-frog", blurb: "Sea turtles and reefs — coming soon.", amazonUrl: null },
   { slug: "samoa", seriesNumber: 5, title: "Samoa", status: "planned", destinationSlug: "samoa", friendSlug: null, blurb: "Waterfalls and rainforest — coming soon.", amazonUrl: null },

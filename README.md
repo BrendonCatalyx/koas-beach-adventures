@@ -34,7 +34,7 @@ src/
   crew/    index.njk (hub) + detail.njk (paginated → one real page per character)
   world/   index.njk (hub) + detail.njk (paginated → one real page per destination)
   books/   index.njk (hub) + detail.njk (paginated → one real page per book)
-  watch.njk, play.njk, rangers.njk, shop.njk, about.njk, learn.njk, search.njk, privacy.njk, terms.njk
+  watch.njk, activities.njk, shop.njk, about.njk, learn.njk, search.njk, privacy.njk, terms.njk
   search-index.11ty.js    Generates /search-index.json at build time
   styles.css, app.js       Design system + client runtime (only genuinely interactive behavior)
   assets/                  characters/ destinations/ books/ videos/ icons/ backgrounds/ ui/
@@ -62,5 +62,5 @@ Every claim below was checked against an actual build, not assumed:
 - Zero double-escaping or malformed HTML, verified across the full build output.
 - JSON-LD present and valid on every live/in-production book and destination page, correctly absent on "planned" ones.
 - `/search-index.json` generates 57 correct entries (8 characters + 20 destinations + 20 books + 9 videos) and the search page's live filtering works against it.
-- Netlify's custom 404 (`/404.html`) and form detection (the Ranger mission form) are wired per Netlify's documented conventions.
+- Netlify's custom 404 (`/404.html`) is wired per Netlify's documented conventions.
 - **The video auto-detection was actually tested, not just built**: a fake file was dropped into `src/assets/videos/koa-welcome.mp4` with zero edits to `videos.js`, rebuilt, and confirmed live everywhere the video appears (homepage, `/watch/`, Koa's and Gully's crew pages, search) — then removed and confirmed it cleanly reverted to the "awaiting export" placeholder. That round-trip is the entire point of the video architecture, so it seemed worth actually proving rather than assuming.

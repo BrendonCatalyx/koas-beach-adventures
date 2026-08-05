@@ -30,9 +30,9 @@ eleventyComputed:
       {% if book.amazonUrl %}
       <a href="{{ book.amazonUrl }}" class="btn" target="_blank" rel="noopener" style="margin-top:20px;">Get it on Amazon</a>
       {% elif book.status == "live" %}
-      <a href="#" class="btn ghost" aria-disabled="true" style="margin-top:20px;">Purchase link coming very soon</a>
+      <span class="btn ghost" aria-disabled="true" style="margin-top:20px;cursor:default;">Purchase link coming very soon</span>
       {% else %}
-      <a href="#" class="btn ghost" aria-disabled="true" style="margin-top:20px;">In the works</a>
+      <span class="btn ghost" aria-disabled="true" style="margin-top:20px;cursor:default;">In the works</span>
       {% endif %}
     </div>
   </div>

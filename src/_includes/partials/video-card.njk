@@ -13,6 +13,7 @@
 {% macro card(video, characters) %}
 {% set status = resolveVideoStatus(video) %}
 {% set hasPoster = posterExists(video) %}
+{% if status == "live" %}
 <div class="video-card" id="video-{{ video.slug }}" data-video-slug="{{ video.slug }}">
   {% if status == "live" and video.source == "self-hosted" %}
     <div class="frame video-frame">
@@ -36,13 +37,9 @@
       {% endif %}
       <span class="youtube-play-btn">▶</span>
     </div>
-  {% else %}
-    <div class="frame" style="background:linear-gradient(135deg,#B8935A,#8a6c3f); color:#fff; position:relative;">
-      ▶
-      <span class="awaiting-export-badge">🎬 Awaiting export</span>
-    </div>
   {% endif %}
   <h3 style="color:var(--teal-dark);">{{ video.title }}</h3>
   <p style="color:#666;">{{ video.caption }}</p>
 </div>
+{% endif %}
 {% endmacro %}

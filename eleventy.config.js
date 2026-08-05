@@ -1,6 +1,6 @@
 import { characterAvatarSVG, tileArtSVG, shellSVG } from "./lib/placeholder-art.mjs";
 import { getRelated, findBySlug } from "./lib/related.mjs";
-import { resolveVideoStatus, posterExists, videosFor, anyLiveVideos } from "./lib/video-status.mjs";
+import { resolveVideoStatus, posterExists, videosFor, anyLiveVideos, fileExists } from "./lib/video-status.mjs";
 import { characterArtPath, characterCutoutPath, characterScenePath, destinationArtPath, bookArtPath, heroVideoPath, heroPosterPath, heroVoicePath } from "./lib/art-status.mjs";
 
 export default function (eleventyConfig) {
@@ -34,6 +34,7 @@ export default function (eleventyConfig) {
 
   // ---------- Video helpers ----------
   eleventyConfig.addNunjucksGlobal("resolveVideoStatus", resolveVideoStatus);
+  eleventyConfig.addNunjucksGlobal("assetExists", fileExists);
   eleventyConfig.addNunjucksGlobal("posterExists", posterExists);
   eleventyConfig.addNunjucksGlobal("videosFor", videosFor);
   eleventyConfig.addNunjucksGlobal("anyLiveVideos", anyLiveVideos);

@@ -135,15 +135,7 @@ function initYouTubeFacades(){
 }
 
 
-function printPassport(slug){
-  document.querySelectorAll('.passport-card').forEach(el=>{
-    el.style.display = (el.dataset.slug === slug) ? '' : 'none';
-  });
-  window.print();
-  setTimeout(()=>{
-    document.querySelectorAll('.passport-card').forEach(el=> el.style.display = '');
-  }, 500);
-}
+
 
 /* ---------- Search page: fetches the prerendered index, filters client-side ---------- */
 function initSearchPage(){

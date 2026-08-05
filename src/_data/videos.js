@@ -33,8 +33,8 @@ const VIDEOS = [
     source: "self-hosted",
     file: "/assets/videos/koa-welcome.mp4",
     poster: "/assets/videos/posters/koa-welcome.jpg",
-    duration: "00:12",
-    caption: "Meet Koa and begin the adventure.",
+    duration: "00:15",
+    caption: "Koa catches a golden-hour wave — with Gully close behind.",
     featured: true,
     status: "awaiting-export"
   },
@@ -48,8 +48,8 @@ const VIDEOS = [
     source: "self-hosted",
     file: "/assets/videos/gully-intro.mp4",
     poster: "/assets/videos/posters/gully-intro.jpg",
-    duration: "00:08",
-    caption: "Silly, clumsy, and completely unbothered by it.",
+    duration: "00:11",
+    caption: "Low over the water, wings out — Gully in his element.",
     featured: false,
     status: "awaiting-export"
   },
@@ -115,7 +115,7 @@ const VIDEOS = [
   },
   {
     slug: "hawaii-adventure",
-    title: "Hawaii's Volcano Trails",
+    title: "Hawaii: Honu Waters",
     category: "destinations",
     characterSlugs: ["koa", "moku"],
     destinationSlug: "hawaii",
@@ -157,7 +157,83 @@ const VIDEOS = [
     caption: "How each book comes to life — a longer piece, hosted on YouTube once published, not self-hosted, to keep the site fast.",
     featured: false,
     status: "awaiting-export"
-  }
+  },
+
+  {
+    slug: "crew-together",
+    title: "The Whole Crew",
+    category: "meet-the-crew",
+    characterSlugs: ["koa", "gully", "dune", "moku", "boko", "guss"],
+    destinationSlug: null,
+    bookSlug: null,
+    source: "self-hosted",
+    file: "/assets/videos/crew-together.mp4",
+    poster: "/assets/videos/posters/crew-together.jpg",
+    duration: "00:05",
+    caption: "Every friend Koa has made so far — together.",
+    featured: true,
+    status: "live"
+  },
+  {
+    slug: "the-voyage",
+    title: "The Voyage",
+    category: "adventure-moments",
+    characterSlugs: [],
+    destinationSlug: null,
+    bookSlug: null,
+    source: "self-hosted",
+    file: "/assets/videos/the-voyage.mp4",
+    poster: "/assets/videos/posters/the-voyage.jpg",
+    duration: "00:15",
+    caption: "The little patched sail, out where the waterfalls meet the sea.",
+    featured: false,
+    status: "live"
+  },
+  {
+    slug: "setting-sail",
+    title: "Setting Sail",
+    category: "adventure-moments",
+    characterSlugs: [],
+    destinationSlug: null,
+    bookSlug: null,
+    source: "self-hosted",
+    file: "/assets/videos/setting-sail.mp4",
+    poster: "/assets/videos/posters/setting-sail.jpg",
+    duration: "00:09",
+    caption: "Golden hour, calm water, and the whole Pacific ahead.",
+    featured: false,
+    status: "live"
+  },
+  {
+    slug: "charting-the-course",
+    title: "Charting the Course",
+    category: "adventure-moments",
+    characterSlugs: ["koa", "gully"],
+    destinationSlug: null,
+    bookSlug: null,
+    source: "self-hosted",
+    file: "/assets/videos/charting-the-course.mp4",
+    poster: "/assets/videos/posters/charting-the-course.jpg",
+    duration: "00:05",
+    caption: "Map out, sail up — where should we go next?",
+    featured: false,
+    status: "live"
+  },
+  {
+    slug: "beach-day-byron",
+    title: "Beach Day at Byron",
+    category: "adventure-moments",
+    characterSlugs: ["koa", "gully"],
+    destinationSlug: "byron-bay",
+    bookSlug: "byron-bay",
+    source: "self-hosted",
+    file: "/assets/videos/beach-day-byron.mp4",
+    poster: "/assets/videos/posters/beach-day-byron.jpg",
+    duration: "00:08",
+    caption: "The Kombi, a surfboard, and one very confident seagull.",
+    featured: false,
+    status: "live"
+  },
 ];
 
 export default VIDEOS;
