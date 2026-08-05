@@ -4,16 +4,28 @@ title: null
 description: null
 permalink: /
 ---
-<!-- ================= HERO ================= -->
-<section id="hero">
-  <div class="wrap hero-inner">
-    <div class="hero-copy reveal in">
-      <span class="eyebrow">Koa's Beach Adventures</span>
-      <h1>Come and explore <span>Koa's world</span></h1>
-      <p>Books, friends, real places, and real animals — Koa's been waiting to show you around.</p>
-    </div>
-    <div class="hero-scene reveal in">
-      <svg viewBox="0 0 200 200" aria-label="Koa the koala waving hello">
+{% from "partials/art.njk" import character as characterArt %}
+{% from "partials/art.njk" import book as bookArt %}
+{% from "partials/art.njk" import destination as destinationArt %}
+{% from "partials/video-card.njk" import card as videoCard %}
+
+<!-- ================= THE WELCOME — arrival and meeting Koa, as one moment ================= -->
+{% set heroVideo = heroVideoPath() %}
+{% set heroPoster = heroPosterPath() %}
+{% set heroVoice = heroVoicePath() %}
+<section id="hero" class="hero-video-section">
+  <div class="hero-media">
+    {% if heroVideo %}
+    <video class="hero-bg-video" autoplay muted loop playsinline {% if heroPoster %}poster="{{ heroPoster }}"{% endif %}>
+      <source src="{{ heroVideo }}" type="video/mp4">
+    </video>
+    {% else %}
+    <div class="hero-fallback-scene" aria-hidden="true">
+      <div class="hero-sky"></div>
+      <div class="cloud cloud-a"><svg width="140" height="50" viewBox="0 0 140 50"><ellipse cx="35" cy="30" rx="35" ry="18" fill="#fff"/><ellipse cx="75" cy="20" rx="30" ry="20" fill="#fff"/><ellipse cx="105" cy="30" rx="28" ry="16" fill="#fff"/></svg></div>
+      <div class="cloud cloud-b"><svg width="140" height="50" viewBox="0 0 140 50"><ellipse cx="35" cy="30" rx="35" ry="18" fill="#fff"/><ellipse cx="75" cy="20" rx="30" ry="20" fill="#fff"/><ellipse cx="105" cy="30" rx="28" ry="16" fill="#fff"/></svg></div>
+      <div class="cloud cloud-c"><svg width="140" height="50" viewBox="0 0 140 50"><ellipse cx="35" cy="30" rx="35" ry="18" fill="#fff"/><ellipse cx="75" cy="20" rx="30" ry="20" fill="#fff"/><ellipse cx="105" cy="30" rx="28" ry="16" fill="#fff"/></svg></div>
+      <svg class="hero-koa-scene" viewBox="0 0 200 200" aria-label="Koa the koala waving hello">
         <circle cx="100" cy="120" r="70" fill="#C9A46C"/>
         <circle cx="100" cy="120" r="70" fill="#000" opacity=".04"/>
         <circle cx="70" cy="70" r="20" fill="#C9A46C"/>
@@ -25,149 +37,208 @@ permalink: /
         <path d="M90,130 Q100,138 110,130" stroke="#2B2622" stroke-width="3" fill="none" stroke-linecap="round"/>
         <path d="M50,150 Q35,120 55,100" stroke="#C9A46C" stroke-width="16" fill="none" stroke-linecap="round"/>
       </svg>
-      <div class="hero-bubble" id="hero-bubble">Oh — hi! I didn't see you there. Come on, I'll show you around.</div>
-      <p class="sound-hint">🔊 Tap or scroll to bring Koa's world to life with sound</p>
-    </div>
-  </div>
-  <div class="cloud cloud-a" aria-hidden="true"><svg width="140" height="50" viewBox="0 0 140 50"><ellipse cx="35" cy="30" rx="35" ry="18" fill="#fff"/><ellipse cx="75" cy="20" rx="30" ry="20" fill="#fff"/><ellipse cx="105" cy="30" rx="28" ry="16" fill="#fff"/></svg></div>
-  <div class="cloud cloud-b" aria-hidden="true"><svg width="140" height="50" viewBox="0 0 140 50"><ellipse cx="35" cy="30" rx="35" ry="18" fill="#fff"/><ellipse cx="75" cy="20" rx="30" ry="20" fill="#fff"/><ellipse cx="105" cy="30" rx="28" ry="16" fill="#fff"/></svg></div>
-  <div class="cloud cloud-c" aria-hidden="true"><svg width="140" height="50" viewBox="0 0 140 50"><ellipse cx="35" cy="30" rx="35" ry="18" fill="#fff"/><ellipse cx="75" cy="20" rx="30" ry="20" fill="#fff"/><ellipse cx="105" cy="30" rx="28" ry="16" fill="#fff"/></svg></div>
-  <div class="tide" aria-hidden="true">
-    <svg viewBox="0 0 1440 220" preserveAspectRatio="none">
-      <path class="tide-wave" fill="#DCEAE6" d="M0,80 C240,140 480,20 720,70 C960,120 1200,40 1440,90 L1440,220 L0,220 Z"/>
-      <path fill="var(--cream)" d="M0,130 C240,180 480,110 720,140 C960,170 1200,120 1440,150 L1440,220 L0,220 Z"/>
-    </svg>
-  </div>
-  <div class="scroll-cue" aria-hidden="true">Scroll to explore ▾</div>
-</section>
-
-<div id="chapter-boat" class="boat-marker bob" style="position:absolute; left:18px; z-index:5;" aria-hidden="true">{% boat 64, true %}</div>
-
-<!-- ================= COLD OPEN ================= -->
-<section id="cold-open" data-chapter>
-  <div class="chapter-divider"><span class="line"></span><span class="label">Chapter One</span><span class="line"></span></div>
-  <div class="wrap cold-open-grid">
-    <div class="cold-open-art reveal">
-      <div class="gully-gag" tabindex="0">
-        <svg viewBox="0 0 200 160" aria-label="Koa and Gully the seagull, tangled up as usual">
-          <circle cx="70" cy="90" r="55" fill="#C9A46C"/>
-          <circle cx="150" cy="60" r="22" fill="#DCE4DC"/>
-          <path d="M150,60 l16,-6 l-4,10 z" fill="#D9A441"/>
-          <path d="M128,72 Q140,50 165,55" stroke="#B8935A" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <div class="tide">
+        <svg viewBox="0 0 1440 220" preserveAspectRatio="none">
+          <path class="tide-wave" fill="#DCEAE6" d="M0,80 C240,140 480,20 720,70 C960,120 1200,40 1440,90 L1440,220 L0,220 Z" opacity=".5"/>
         </svg>
-        <span class="gag-note">Gully insists this was intentional.</span>
       </div>
     </div>
-    <div class="cold-open-copy reveal">
-      <span class="eyebrow">Meet Koa</span>
-      <h2>"I'll help care for your home — if you'll show it to me."</h2>
-      <p>That's Koa's promise, every single time he lands somewhere new. Right now his first mate is a seagull called Gully, who is silly, a little clumsy, and completely unbothered by either.</p>
-      <a href="/crew/koa/" class="btn ghost" style="margin-top:18px;">Meet Koa properly →</a>
+    {% endif %}
+    <div class="hero-scrim"></div>
+  </div>
+
+  <div class="hero-overlay wrap">
+    <p class="hero-greeting" id="hero-greeting">Oh, hi!<br>Perfect timing.</p>
+  </div>
+
+  {% if heroVoice %}
+  <audio id="hero-voice" preload="none"><source src="{{ heroVoice }}"></audio>
+  <button type="button" id="hero-sound-toggle" class="hero-sound-toggle" aria-label="Play Koa's voice" aria-pressed="false">🔇</button>
+  {% endif %}
+
+  <div class="scroll-cue" id="scroll-cue" aria-hidden="true">▾</div>
+</section>
+
+<!-- Gully occasionally flies across the page — a real surprise, not a static illustration. Triggered from app.js, respects prefers-reduced-motion via the site's existing global rule. -->
+{% set gully = findBySlug(characters, "gully") %}
+<div id="gully-flyby" class="gully-flyby" aria-hidden="true">
+  {% set gullyCutout = characterCutoutPath(gully) %}
+  <div class="gully-flyby-inner">{% if gullyCutout %}<img src="{{ gullyCutout }}" alt="">{% else %}{{ characterArt(gully, 70) }}{% endif %}</div>
+</div>
+
+<!-- A hidden shell, findable in the sand — rewards curiosity, not a labelled button -->
+<button type="button" id="hidden-shell" class="hidden-shell" aria-label="You found something! Tap to see.">
+  {% shell %}
+</button>
+<div id="shell-reveal" class="shell-reveal" hidden>
+  <div class="shell-reveal-card">
+    <p id="shell-reveal-text"></p>
+  </div>
+</div>
+<script type="application/json" id="shell-facts">[
+  "Gully once tried to surf. It did not go well.",
+  "Koa has never once whistled successfully. He has never stopped trying.",
+  "You found a hidden shell! Koa keeps the good ones in his satchel.",
+  "Somewhere out there, Gully is definitely getting into trouble right now.",
+  "A real koala sleeps up to 20 hours a day. Koa is the exception \u2014 he's always exploring."
+]</script>
+
+<!-- ================= CHOOSE YOUR ADVENTURE — three doorways into three worlds ================= -->
+<section id="choose-adventure" data-chapter>
+  <div class="wrap">
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">Choose Your Adventure</span>
+      <h2>Who will you meet first?</h2>
+    </div>
+    <div class="doorways reveal-group reveal">
+      {% for slug in ["byron-bay", "hawaii", "solomon-islands"] %}
+      {% set d = findBySlug(destinations, slug) %}
+      {% set friend = findBySlug(characters, d.friendSlug) %}
+      <a href="/world/{{ d.slug }}/" class="doorway doorway-{{ d.slug }}" aria-label="Visit {{ d.name }} and meet {{ friend.name }}">
+        <div class="doorway-arch">
+          {% if slug == "byron-bay" %}
+          <svg class="doorway-scene" viewBox="0 0 300 380" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+            <defs><linearGradient id="sky-byron" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#FDEBC8"/><stop offset="0.65" stop-color="#F7D9A0"/><stop offset="1" stop-color="#F3CC8B"/>
+            </linearGradient></defs>
+            <rect width="300" height="380" fill="url(#sky-byron)"/>
+            <circle cx="150" cy="180" r="46" fill="#FFF6E0" opacity=".9"/>
+            <path d="M0,205 L58,160 L98,178 L120,205 Z" fill="#B99B6B"/>
+            <rect x="52" y="128" width="13" height="34" fill="#F5EFE3"/>
+            <rect x="49" y="122" width="19" height="8" rx="2" fill="#C4633A"/>
+            <circle cx="58.5" cy="118" r="3.4" fill="#FBD98B"/>
+            <rect y="205" width="300" height="175" fill="#7FAFA8"/>
+            <path d="M0,214 Q75,206 150,214 T300,214" stroke="#fff" stroke-opacity=".4" stroke-width="3" fill="none"/>
+            <path d="M0,236 Q75,229 150,236 T300,236" stroke="#fff" stroke-opacity=".25" stroke-width="2.5" fill="none"/>
+            <path d="M18,380 C22,352 15,338 24,318 M34,380 C36,356 30,344 38,326 M262,380 C266,352 258,340 268,320 M280,380 C282,358 276,346 284,330" stroke="#9BAF7E" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </svg>
+          {% elif slug == "hawaii" %}
+          <svg class="doorway-scene" viewBox="0 0 300 380" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+            <defs><linearGradient id="sky-hawaii" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#F9C899"/><stop offset="0.7" stop-color="#EFA47C"/><stop offset="1" stop-color="#E88A6A"/>
+            </linearGradient></defs>
+            <rect width="300" height="380" fill="url(#sky-hawaii)"/>
+            <circle cx="150" cy="196" r="40" fill="#FCE1B8" opacity=".85"/>
+            <path d="M60,218 L128,96 L148,120 L172,88 L240,218 Z" fill="#7A5A54"/>
+            <path d="M140,100 C138,88 148,84 146,72" stroke="#C9BFB4" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>
+            <path d="M252,218 C250,196 246,178 250,158" stroke="#4E6B4A" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <path d="M250,158 C238,150 226,148 216,152 M250,158 C244,144 236,136 226,132 M250,158 C252,142 260,132 270,128 M250,158 C262,150 274,148 284,152 M250,158 C258,146 268,140 278,138" stroke="#4E6B4A" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <rect y="218" width="300" height="162" fill="#5F9C94"/>
+            <path d="M0,228 Q75,221 150,228 T300,228" stroke="#fff" stroke-opacity=".35" stroke-width="3" fill="none"/>
+          </svg>
+          {% else %}
+          <svg class="doorway-scene" viewBox="0 0 300 380" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+            <defs><linearGradient id="sky-solomon" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#DFF3EE"/><stop offset="1" stop-color="#BCE7DE"/>
+            </linearGradient></defs>
+            <rect width="300" height="380" fill="url(#sky-solomon)"/>
+            <circle cx="150" cy="150" r="38" fill="#FFFDF4" opacity=".7"/>
+            <ellipse cx="62" cy="208" rx="52" ry="18" fill="#5E8A62"/>
+            <ellipse cx="235" cy="200" rx="44" ry="15" fill="#6E9A70"/>
+            <ellipse cx="150" cy="220" rx="34" ry="12" fill="#547E58"/>
+            <rect y="216" width="300" height="164" fill="#6FC7BC"/>
+            <path d="M0,232 Q75,226 150,232 T300,232" stroke="#fff" stroke-opacity=".45" stroke-width="3" fill="none"/>
+            <path d="M0,258 Q75,252 150,258 T300,258" stroke="#fff" stroke-opacity=".3" stroke-width="2.5" fill="none"/>
+            <path d="M262,380 C260,352 264,338 258,322 M278,380 C280,354 274,342 282,328" stroke="#4E6B4A" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </svg>
+          {% endif %}
+          <div class="doorway-glow" aria-hidden="true"></div>
+          {% set cutout = characterCutoutPath(friend) %}
+          {% if cutout %}
+          <div class="doorway-friend"><img src="{{ cutout }}" alt=""></div>
+          {% else %}
+          <div class="doorway-friend doorway-friend-circle">{{ characterArt(friend, 170) }}</div>
+          {% endif %}
+        </div>
+        <div class="doorway-label">
+          <span class="doorway-place">{{ d.name }}</span>
+          <span class="doorway-meet">Meet {{ friend.name }}</span>
+        </div>
+      </a>
+      {% endfor %}
     </div>
   </div>
 </section>
 
-<!-- ================= CREW TEASER ================= -->
+<!-- ================= MEET THE FRIENDS — large portraits, the emotional heart of the brand ================= -->
 <section id="crew-teaser" data-chapter>
-  <div class="wrap reveal">
-    <span class="eyebrow" style="color:var(--mustard);">And everywhere he goes...</span>
-    <h2>...a new friend joins the crew</h2>
-    <p style="max-width:56ch;margin:14px auto 0;color:#CFE3DF;">Koa and Gully travel the Pacific coastline by coastline — and somebody new is always waiting.</p>
+  <div class="wrap reveal" style="text-align:center;">
+    <span class="eyebrow" style="color:var(--mustard);">And Everywhere He Goes...</span>
+    <h2>Every adventure brings a new friend</h2>
+    <p style="max-width:56ch;margin:14px auto 0;color:#CFE3DF;">&ldquo;I&rsquo;ll help care for your home — if you&rsquo;ll show it to me.&rdquo; That&rsquo;s Koa&rsquo;s promise, every time he lands somewhere new — and somebody new is always waiting.</p>
   </div>
-  <div class="shore">
-    <div class="shore-line reveal-group reveal">
-      {% for c in characters %}{% if c.status == "live" or c.status == "in-production" %}
-      <a href="/crew/{{ c.slug }}/" class="crew-mini{% if c.slug == 'gully' %} gully{% endif %}">
-        <div class="avatar">{% characterAvatar c, (44 if c.slug == "gully" else 88) %}</div>
-        <span>{{ c.name }}</span>
-      </a>
-      {% endif %}{% endfor %}
-    </div>
+  <div class="crew-showcase reveal-group reveal">
+    {% for c in characters %}{% if c.status == "live" or c.status == "in-production" %}
+    <a href="/crew/{{ c.slug }}/" class="crew-card{% if c.slug == 'gully' %} gully{% elif c.slug == 'koa' %} koa-lead{% endif %}">
+      <div class="crew-card-portrait">{{ characterArt(c, (280 if c.slug == "koa" else 220)) }}</div>
+      <span class="crew-card-name">{{ c.name }}</span>
+      <span class="crew-card-role">{{ c.role }}</span>
+    </a>
+    {% endif %}{% endfor %}
   </div>
   <p class="shore-caption">Tap anyone in the crew to find out more about them.</p>
 </section>
 
-<!-- ================= EXPLORE ================= -->
-<section id="explore-teaser" data-chapter>
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Explore</span>
-      <h2>Where will Koa go next?</h2>
-      <p>Every stop on Koa's route — the ones you can visit today, and the ones still to come.</p>
-    </div>
-    <div class="map-frame reveal">
-      {% for d in destinations %}
-      <a href="/world/{{ d.slug }}/" class="map-pin {{ 'live' if (d.status == 'live' or d.status == 'in-production') else 'planned' }}" style="left:{{ d.mapX }}%; top:{{ d.mapY }}%;">
-        <span class="tip">{{ d.name }}</span>
-        <span class="dot"></span>
-      </a>
-      {% endfor %}
-      <div id="boat-transit" style="left:{{ destinations[0].mapX }}%; top:{{ destinations[0].mapY - 8 }}%;">{% boat 40, true %}</div>
-    </div>
-    <p style="text-align:center;margin-top:18px;"><a href="/world/" class="btn ghost">See the full map →</a></p>
-  </div>
-</section>
-
-<!-- ================= WATCH ================= -->
-<section id="watch-teaser" data-chapter>
-  <div class="wrap">
-    <div class="section-head on-dark reveal">
-      <span class="eyebrow" style="color:var(--mustard);">Watch</span>
-      <h2>Step into the adventure</h2>
-    </div>
-    <div class="video-row reveal-group reveal">
-      {% from "partials/video-card.njk" import card as videoCard %}
-      {% set featured = videosFor(videos, { featuredOnly: true }) %}
-      {% for v in featured %}{{ videoCard(v, characters) }}{% endfor %}
-    </div>
-    <p style="text-align:center;margin-top:28px;"><a href="/watch/" class="btn ghost on-dark">Watch more →</a></p>
-  </div>
-</section>
-
-<!-- ================= READ ================= -->
+<!-- ================= LATEST BOOKS ================= -->
 <section id="read-teaser" data-chapter>
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Read</span>
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">Latest Books</span>
       <h2>The adventures so far</h2>
-      <p>Each book follows Koa and Gully to a new coastline, with a new friend and a new place to discover.</p>
+      <p style="margin-left:auto;margin-right:auto;">Each book follows Koa and Gully to a new coastline, with a new friend and a new place to discover.</p>
     </div>
     <div class="book-row reveal-group reveal">
       {% for b in books %}{% if loop.index <= 3 %}
       <a href="/books/{{ b.slug }}/" class="book-card">
-        <div class="book-cover" style="background:linear-gradient(135deg, var(--teal), var(--teal-dark)); color:#fff;">{{ b.title }}</div>
+        <div class="book-cover">{{ bookArt(b) }}</div>
         <span class="{{ 'tag-live' if b.status == 'live' else 'tag-soon' }}">{{ "Available now" if b.status == "live" else ("Coming soon" if b.status == "in-production" else "In the works") }}</span>
         <h3>{{ b.title }}</h3>
         <p>{{ b.blurb }}</p>
       </a>
       {% endif %}{% endfor %}
     </div>
-    <p style="text-align:center;margin-top:28px;"><a href="/books/" class="btn ghost">See the whole series →</a></p>
+    <p style="text-align:center;margin-top:36px;"><a href="/books/" class="btn ghost">See the whole series →</a></p>
   </div>
 </section>
 
-<!-- ================= PLAY ================= -->
+<!-- ================= WATCH ADVENTURES ================= -->
+{% if anyLiveVideos(videos) %}
+<section id="watch-teaser" data-chapter>
+  <div class="wrap">
+    <div class="section-head on-dark reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+      <span class="eyebrow" style="color:var(--mustard);">Watch Adventures</span>
+      <h2>Step into the world</h2>
+    </div>
+    <div class="video-row reveal-group reveal">
+      {% set featured = videosFor(videos, { featuredOnly: true }) %}
+      {% for v in featured %}{{ videoCard(v, characters) }}{% endfor %}
+    </div>
+    <p style="text-align:center;margin-top:36px;"><a href="/watch/" class="btn ghost on-dark">Watch more →</a></p>
+  </div>
+</section>
+{% endif %}
+
+<!-- ================= FREE ACTIVITIES ================= -->
 <section id="play-teaser" data-chapter>
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Play</span>
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">Free Activities</span>
       <h2>Grab your crayons</h2>
     </div>
     <div class="play-row reveal-group reveal">
       <div class="play-card">
         <h3>Colouring Corner</h3>
         <p>Free and printable pages starring the whole crew.</p>
-        <a href="/play/#colouring" class="btn small">Start colouring</a>
+        <a href="/activities/#colouring" class="btn small">Start colouring</a>
       </div>
       <div class="play-card">
         <h3>Character Passports</h3>
         <p>Download, print, and collect a passport for every friend you meet.</p>
-        <a href="/play/#passports" class="btn small">Collect a passport</a>
+        <a href="/activities/#passports" class="btn small">Collect a passport</a>
       </div>
     </div>
-
     {% set dykFacts = didYouKnowFacts(destinations) %}
-    <div class="dyk reveal" id="dyk-widget" style="margin-top:44px;" role="button" tabindex="0" aria-label="Tap for another wildlife fact">
+    <div class="dyk reveal" id="dyk-widget" style="margin-top:52px;" role="button" tabindex="0" aria-label="Tap for another wildlife fact">
       <div class="badge-icon">{% shell %}</div>
       <div><h3>Did You Know?</h3><p class="dyk-text">{{ dykFacts[0] }}</p></div>
     </div>
@@ -175,48 +246,55 @@ permalink: /
   </div>
 </section>
 
-<!-- ================= RANGERS ================= -->
-<section id="rangers-teaser" data-chapter>
-  <div class="wrap reveal">
-    <span class="eyebrow">Join In, For Real</span>
-    <h2>Become a Beach Ranger</h2>
-    <p style="max-width:56ch;margin:14px auto 0;">Once you've explored Koa's world, here's how to help take care of the real one.</p>
-    <div class="badge-row">
-      <div class="badge"><div class="patch bronze">1</div><h3>Bronze Ranger</h3><p>Your first mission report.</p></div>
-      <div class="badge"><div class="patch silver">5</div><h3>Silver Ranger</h3><p>Five missions in.</p></div>
-      <div class="badge"><div class="patch gold">10+</div><h3>Gold Ranger</h3><p>Ten missions and counting.</p></div>
-    </div>
-    <a href="/rangers/" class="btn">Find out how →</a>
-  </div>
-</section>
-
-<!-- ================= BEACH SHACK ================= -->
-<section id="shop-teaser" data-chapter>
+<!-- ================= WHERE SHOULD WE GO NEXT? ================= -->
+<section id="where-next" data-chapter>
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Take a Piece Home</span>
-      <h2>The Beach Shack</h2>
+    <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">The Adventure Continues</span>
+      <h2>Where should Koa go next?</h2>
+      <p style="margin-left:auto;margin-right:auto;">Koa has already explored three amazing places — but there are so many adventures still waiting. If you could choose&hellip; where should Koa travel next, and why? What animals do you think he'll meet? What would you like to learn?</p>
     </div>
-    <div class="shop-row reveal-group reveal">
-      <div class="shop-card">
-        <h3>Prints, badges & crew merch</h3>
-        <p>A little something from every adventure — a portion of every sale funds the development of Catalyx One.</p>
-        <a href="/beach-shack/" class="btn">Visit the Beach Shack →</a>
+    <div class="next-adventures reveal-group reveal">
+      {% for slug in ["fiji", "samoa", "vanuatu"] %}
+      {% set d = findBySlug(destinations, slug) %}
+      <div class="next-card">
+        <div class="next-card-art">{{ destinationArt(d, "#4A7A7A") }}</div>
+        <div class="next-card-body">
+          <h3>{{ d.name }}</h3>
+          <p>{{ d.hook }}</p>
+        </div>
       </div>
+      {% endfor %}
+    </div>
+    <div class="vote-block reveal">
+      <h3>{{ site.currentVote.question }}</h3>
+      <p>{{ site.currentVote.note }}</p>
+      {% set liveVoteSocial = [] %}
+      {% for s in site.social %}{% if s.href != "#" %}{% set liveVoteSocial = (liveVoteSocial.push(s), liveVoteSocial) %}{% endif %}{% endfor %}
+      {% if liveVoteSocial.length > 0 %}
+      <div class="vote-links">
+        {% for s in liveVoteSocial %}<a href="{{ s.href }}" class="btn ghost small" rel="noopener">{{ s.icon }} {{ s.label }}</a>{% endfor %}
+      </div>
+      {% endif %}
+      <p class="next-note" style="margin-top:18px;color:#7a6a4a;font-family:'Fredoka',sans-serif;">Koa's next adventures are already being planned.</p>
     </div>
   </div>
 </section>
 
-<!-- ================= FOLLOW ================= -->
+<!-- ================= FOLLOW — hidden entirely until at least one real social URL is configured ================= -->
+{% set liveSocial = [] %}
+{% for s in site.social %}{% if s.href != "#" %}{% set liveSocial = (liveSocial.push(s), liveSocial) %}{% endif %}{% endfor %}
+{% if liveSocial.length > 0 %}
 <section id="follow" data-chapter>
-  <div class="wrap reveal">
+  <div class="wrap reveal" style="text-align:center;">
     <span class="eyebrow">Real Families, Real Adventures</span>
     <h2>Follow along</h2>
     <p style="max-width:52ch;margin:14px auto 0;">Koa's world keeps growing — see what other families are discovering.</p>
     <div class="follow-row">
-      {% for s in site.social %}
+      {% for s in liveSocial %}
       <a href="{{ s.href }}" class="follow-icon" rel="noopener">{{ s.icon }} {{ s.label }}</a>
       {% endfor %}
     </div>
   </div>
 </section>
+{% endif %}

@@ -4,3 +4,13 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+[[redirects]]
+  from = "/play/*"
+  to = "/activities/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/rangers/"
+  to = "/activities/"
+  status = 301

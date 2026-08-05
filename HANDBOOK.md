@@ -264,3 +264,20 @@ These currently all point to `#` — nobody's real profile URLs were on hand whe
 The site is prerendered with [Eleventy](https://11ty.dev) from three content files (`characters.js`, `destinations.js`, `books.js`) plus one config file (`site.js`). Templates read that data and generate real static HTML at build time — every character, destination, and book gets a real prerendered page with correct SEO tags, not a client-rendered shell. No React, no server, no database. Deploys as static files to Netlify. Adding content means editing data files, never writing new templates, for anything already covered by the existing three content types.
 
 If you're an AI assistant reading this to get oriented: the data model, the related-content cross-referencing (`lib/related.mjs`), and the placeholder-art system (`lib/placeholder-art.mjs`) are the load-bearing pieces. Everything else is fairly conventional Eleventy/Nunjucks.
+
+## Audio, cutouts, and image formats (added in V1.0)
+
+- **Koa's hero voice line**: drop a file at `src/assets/audio/koa-welcome.mp3` (or `.m4a`) and the
+  accessible sound toggle appears on The Welcome automatically. Delete the file and the control
+  disappears. No template edits — same file-existence pattern as all art. Verify any new VO take
+  with a transcription check before shipping it.
+- **Character cutouts**: `src/assets/characters/cutouts/<slug>.webp` holds transparent-background
+  versions used where characters stand inside scenes (the Choose Your Adventure doorways).
+  If a cutout is missing the doorway falls back to a circle-cropped portrait automatically.
+  Cutouts are made locally (flood-fill the flat cream background to transparency, trim, export) —
+  no credits needed.
+- **Image format practice**: all character art ships as **512px WebP** (portraits display at
+  ≤240px, so 512 covers retina). The art auto-detection checks `.png`, `.jpg`, `.jpeg`, `.webp`
+  in that order — if you drop in a new PNG, it will win over an existing WebP of the same slug,
+  so remove the old file when replacing art. Keep source-resolution masters in Higgsfield, not
+  in the repo.

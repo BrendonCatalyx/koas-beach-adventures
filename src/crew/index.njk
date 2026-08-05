@@ -13,15 +13,16 @@ permalink: /crew/
 </div>
 <section class="wrap" style="padding-top:0;">
   <div class="grid-cards">
-    {% for c in characters %}
+    {% from "partials/art.njk" import character as characterArt %}
+    {% for c in characters %}{% if c.status == "live" or c.status == "in-production" %}
     <a href="/crew/{{ c.slug }}/" class="entity-card reveal in">
-      <div class="art" style="background:{{ c.swatch }};">{% characterAvatar c, 120 %}</div>
+      <div class="art" style="background:{{ c.swatch }};">{{ characterArt(c, 120) }}</div>
       <div class="body">
         <span class="status-chip {{ c.status }}">{{ "Live" if c.status == "live" else ("Coming soon" if c.status == "in-production" else "Future friend") }}</span>
         <h3>{{ c.name }}</h3>
         <p>{{ c.role }}</p>
       </div>
     </a>
-    {% endfor %}
+    {% endif %}{% endfor %}
   </div>
 </section>

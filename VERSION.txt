@@ -1,0 +1,19 @@
+Koa's Beach Adventures
+Version 3.2
+Date: 5 August 2026
+
+This ZIP contains:
+✓ Eleventy source project
+✓ Ready for GitHub
+✓ Ready for Netlify
+✓ No compiled _site files included
+
+Included in this version:
+- V3 character-welcomed destination pages (Dune, Moku, Boko & Guss)
+- First-person character pages with home-scene artwork
+- The Voyage section (boat + journey, /world/)
+- Canonical boat assets (boat-canonical.webp, boat-cutout.webp)
+- Koa + Gully + boat scene as OG share image and About hero
+- Gully de-UI'd: real cutout flyby, no speech-bubble chrome
+- Koa's voice line (auto-detected sound control on The Welcome)
+- Six painted destination artworks; all art 512-1024px WebP

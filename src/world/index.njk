@@ -1,36 +1,76 @@
 ---
 layout: layouts/base.njk
 title: Explore the World
-description: Twenty destinations, live today and still to come.
+description: Every published Koa's Beach Adventures destination, with a whole Pacific still to come.
 permalink: /world/
 ---
+{% from "partials/art.njk" import destination as destinationArt %}
+
 <div class="page-hero">
   <div class="wrap">
     <span class="eyebrow">Explore</span>
-    <h1>Where will Koa go next?</h1>
-    <p>Twenty destinations, all part of the same journey — the ones you can visit today, and the ones still ahead.</p>
+    <h1>Choose your adventure</h1>
+    <p>Three real places, three real friends — with a whole Pacific still to come.</p>
   </div>
 </div>
+
+<!-- ================= PUBLISHED ADVENTURES — the three live destinations, given real room ================= -->
 <section class="wrap" style="padding-top:0;">
-  <div class="map-frame reveal in" style="margin-bottom:48px;">
-    {% for d in destinations %}
-    <a href="/world/{{ d.slug }}/" class="map-pin {{ 'live' if (d.status == 'live' or d.status == 'in-production') else 'planned' }}" style="left:{{ d.mapX }}%; top:{{ d.mapY }}%;">
-      <span class="tip">{{ d.name }}</span>
-      <span class="dot"></span>
+  <div class="published-adventures reveal-group reveal">
+    {% for slug in ["byron-bay", "hawaii", "solomon-islands"] %}
+    {% set d = findBySlug(destinations, slug) %}
+    <a href="/world/{{ d.slug }}/" class="published-card">
+      <div class="published-card-art">{{ destinationArt(d) }}</div>
+      <div class="published-card-body">
+        <span class="status-chip live">Live</span>
+        <h2>{{ d.name }}</h2>
+        <p>{{ d.hook }}</p>
+        <span class="published-card-cta">Explore {{ d.name }} →</span>
+      </div>
     </a>
     {% endfor %}
   </div>
-  <div class="grid-cards">
-    {% for d in destinations %}
-    {% set tileColor = "#B9C6C2" if d.status == "planned" else "#4A7A7A" %}
-    <a href="/world/{{ d.slug }}/" class="entity-card reveal in">
-      <div class="art">{% tileArt tileColor, d.name %}</div>
-      <div class="body">
-        <span class="status-chip {{ d.status }}">{{ "Live" if d.status == "live" else ("Coming soon" if d.status == "in-production" else "Future destination") }}</span>
+
+  <p style="text-align:center;margin-top:48px;">
+    <a href="#coming-soon" class="btn ghost">Explore the full world →</a>
+  </p>
+</section>
+
+<!-- ================= THE VOYAGE — the journey between islands IS the story ================= -->
+<section class="wrap" id="voyage">
+  <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+    <span class="eyebrow">One Continuous Journey</span>
+    <h2>The voyage is part of the adventure</h2>
+    <p style="margin-left:auto;margin-right:auto;">Koa's adventures aren't separate stories — they're one long sail across the Pacific. Every time Koa and Gully leave one island behind, the ocean itself becomes the adventure.</p>
+  </div>
+  <div class="voyage-art reveal">
+    <img src="/assets/ui/voyage.webp" alt="Koa's little patched-sail boat on the open Pacific, a whale surfacing gently beside it" loading="lazy">
+  </div>
+  <div class="voyage-discoveries reveal">
+    <p style="text-align:center;font-family:'Fredoka',sans-serif;color:var(--teal-dark);font-weight:600;margin-bottom:14px;">Out on the open ocean, Koa and Gully discover&hellip;</p>
+    <div class="voyage-tags">
+      <span>🌊 Ocean currents</span><span>⭐ Navigating by the stars</span><span>🐬 Dolphins</span><span>🐋 Whales</span><span>🐟 Flying fish</span><span>🐢 Sea turtles</span><span>🪸 Coral reefs</span><span>🕊️ Seabirds</span><span>🏝️ Remote islands</span>
+    </div>
+    <p style="text-align:center;max-width:58ch;margin:22px auto 0;color:#555;">And whenever they spot something floating that doesn't belong in the ocean, they scoop it up — because every small act of care makes the sea a little better for everyone who lives there.</p>
+  </div>
+</section>
+
+<!-- ================= MORE ADVENTURES COMING SOON ================= -->
+<section class="wrap" id="coming-soon">
+  <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+    <span class="eyebrow">More Adventures Coming Soon</span>
+    <h2>Koa's next adventures are already being planned</h2>
+  </div>
+  <div class="next-adventures reveal-group reveal" style="max-width:960px;margin:0 auto;">
+    {% for slug in ["fiji", "samoa", "vanuatu"] %}
+    {% set d = findBySlug(destinations, slug) %}
+    <div class="next-card">
+      <div class="next-card-art">{{ destinationArt(d, "#4A7A7A") }}</div>
+      <div class="next-card-body">
         <h3>{{ d.name }}</h3>
         <p>{{ d.hook }}</p>
       </div>
-    </a>
+    </div>
     {% endfor %}
   </div>
 </section>

@@ -10,10 +10,6 @@
      are ACCENTS ONLY (eyebrows, tags, single highlights) — this is a
      direct correction of V1, where rust ran every button on the page
      and broke the Bible's "accent only" rule.
-   - Signature element: the boat. Canonical design (dusty-blue hull,
-     one mast, cream sail with a grey-blue patch and a tan patch) is
-     used as a recurring wayfinding device between chapters — see the
-     .boat-marker component and app.js's boat transit logic.
    ============================================================ */
 
 :root{
@@ -57,7 +53,7 @@ a{ color:inherit; }
 img{ max-width:100%; display:block; }
 button{ font-family:inherit; }
 .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
-section{ position:relative; padding:88px 0; }
+section{ position:relative; padding:120px 0; }
 .visually-hidden{
   position:absolute; width:1px; height:1px; overflow:hidden;
   clip:rect(0,0,0,0); white-space:nowrap; border:0; padding:0; margin:-1px;
@@ -74,7 +70,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior:auto !important; }
   .reveal{ opacity:1 !important; transform:none !important; }
-  .boat-marker{ animation:none !important; }
 }
 
 /* ============================================================
@@ -84,9 +79,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   font-family:'Fredoka',sans-serif; font-size:.8rem; letter-spacing:.14em;
   text-transform:uppercase; color: var(--rust); margin-bottom:10px; display:inline-block;
 }
-.section-head{ max-width:60ch; margin-bottom:40px; }
-.section-head h2{ font-size:clamp(1.8rem,4vw,2.5rem); color: var(--teal-dark); }
-.section-head p{ font-size:1.05rem; margin-top:10px; }
+.section-head{ max-width:64ch; margin-bottom:52px; }
+.section-head h2{ font-size:clamp(2.1rem,4.6vw,3rem); color: var(--teal-dark); }
+.section-head p{ font-size:1.15rem; margin-top:14px; }
 .section-head.on-dark h2{ color:#fff; }
 .section-head.on-dark p{ color:#CFE3DF; }
 
@@ -124,63 +119,110 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .reveal-group.in > *:nth-child(6){ transition-delay:.5s; }
 
 /* ============================================================
-   HEADER / NAV
+   HEADER / NAV — two-tier: quiet parent utility bar, big kid nav below
    ============================================================ */
-.site-header{
+.site-header{ position:relative; z-index:50; }
+
+/* ---- Utility bar (parent-facing: Learn, About, Shop, Search) — NOT sticky, scrolls away ---- */
+.utility-bar{ background:var(--teal-dark); }
+.utility-bar-inner{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:8px 0; font-size:.8rem;
+}
+.utility-bar nav{ display:flex; gap:20px; }
+.utility-bar nav a{ color:#CFE3DF; text-decoration:none; opacity:.85; transition:opacity .2s var(--ease); }
+.utility-bar nav a:hover{ opacity:1; }
+.utility-bar .header-search input{
+  border:1.5px solid rgba(255,255,255,.25); border-radius:999px; padding:5px 12px; font-size:.8rem;
+  font-family:'Nunito',sans-serif; background:rgba(255,255,255,.1); color:#fff; width:210px; transition:width .25s var(--ease), background .2s var(--ease);
+}
+.utility-bar .header-search input::placeholder{ color:#B9D3CE; }
+.utility-bar .header-search input:focus{ width:260px; background:rgba(255,255,255,.18); }
+
+/* ---- Main nav bar (kid-facing: Explore, Meet the Friends, Books, Watch, Activities) — sticky ---- */
+.main-nav-bar{
   position:sticky; top:0; z-index:50;
-  background: rgba(245,239,227,.9); backdrop-filter: blur(8px);
+  background: var(--cream);
   border-bottom:1px solid rgba(31,52,56,.08);
 }
-.site-header .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:14px; padding-bottom:14px; }
-.brand{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:1.15rem; color:var(--teal-dark); text-decoration:none; }
-.brand svg{ width:34px; height:34px; }
-.primary-nav{ display:flex; align-items:center; gap:4px; }
+.main-nav-bar .wrap{ display:flex; align-items:center; justify-content:space-between; gap:20px; padding:14px 0; }
+.brand{ display:flex; align-items:center; gap:12px; font-family:'Fredoka',sans-serif; font-weight:700; font-size:1.4rem; color:var(--teal-dark); text-decoration:none; white-space:nowrap; }
+.brand svg{ width:48px; height:48px; }
+.primary-nav{ display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap; }
 .primary-nav a{
-  font-family:'Fredoka',sans-serif; font-weight:600; font-size:.95rem;
-  padding:8px 14px; border-radius:999px; text-decoration:none; color:var(--teal-dark);
-  transition: background .2s var(--ease);
+  font-family:'Fredoka',sans-serif; font-weight:700; font-size:1.1rem;
+  padding:11px 20px; border-radius:999px; text-decoration:none; color:var(--teal-dark);
+  transition: background .2s var(--ease), transform .15s var(--ease);
 }
-.primary-nav a:hover, .primary-nav a[aria-current="page"]{ background: rgba(74,122,122,.12); }
-.header-extra{ display:flex; align-items:center; gap:14px; }
-.icon-link{ display:flex; align-items:center; gap:6px; font-size:.85rem; color:var(--teal-dark); text-decoration:none; opacity:.8; }
-.icon-link:hover{ opacity:1; }
-.header-search{ display:flex; align-items:center; }
-.header-search input{
-  border:1.5px solid rgba(31,52,56,.15); border-radius:999px; padding:7px 14px; font-size:.85rem;
-  font-family:'Nunito',sans-serif; background:#fff; width:170px; transition:width .25s var(--ease);
-}
-.header-search input:focus{ width:210px; }
+.primary-nav a:hover{ background: rgba(74,122,122,.14); transform:translateY(-1px); }
+.primary-nav a[aria-current="page"]{ background:var(--teal); color:#fff; }
+.mobile-only-links{ display:none; }
 .nav-toggle{ display:none; }
 
-@media (max-width:860px){
+@media (max-width:960px){
+  .utility-bar nav{ gap:14px; }
   .primary-nav{
-    position:fixed; inset:64px 0 0 0; background:var(--cream); flex-direction:column;
+    position:fixed; inset:70px 0 0 0; background:var(--cream); flex-direction:column;
     justify-content:flex-start; align-items:stretch; gap:0; padding:20px; transform:translateY(-110%);
-    transition:transform .3s var(--ease); z-index:40;
+    visibility:hidden; transition:transform .3s var(--ease), visibility 0s linear .3s; z-index:40; overflow-y:auto;
   }
-  .primary-nav.open{ transform:translateY(0); }
-  .primary-nav a{ padding:16px; font-size:1.2rem; border-bottom:1px solid rgba(31,52,56,.08); border-radius:0; }
+  .primary-nav.open{ transform:translateY(0); visibility:visible; transition:transform .3s var(--ease); }
+  .primary-nav a{ padding:18px; font-size:1.3rem; border-bottom:1px solid rgba(31,52,56,.08); border-radius:0; }
+  .primary-nav a[aria-current="page"]{ background:none; color:var(--teal-dark); }
+  .mobile-only-links{ display:flex; flex-direction:column; margin-top:8px; }
+  .mobile-only-links a{ padding:18px; font-size:1.3rem; border-bottom:1px solid rgba(31,52,56,.08); text-decoration:none; color:var(--teal-dark); font-family:'Fredoka',sans-serif; font-weight:600; }
   .nav-toggle{
-    display:flex; align-items:center; justify-content:center; width:40px; height:40px;
-    background:none; border:2px solid var(--teal-dark); border-radius:10px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; width:44px; height:44px;
+    background:none; border:2px solid var(--teal-dark); border-radius:10px; cursor:pointer; font-size:1.2rem;
   }
-  .header-search{ display:none; }
+  .utility-bar .header-search{ display:none; }
+}
+@media (max-width:640px){
+  .brand span, .brand{ font-size:1.05rem; }
+  .utility-bar nav{ gap:10px; font-size:.72rem; }
 }
 
 /* ============================================================
-   THE BOAT — signature transition device (see app.js)
+   DELIGHT MOMENTS — small surprises, not decoration
    ============================================================ */
-.boat-marker{
-  width:64px; height:64px; opacity:.9;
-  transition: transform .6s var(--ease), left .8s var(--ease), top .8s var(--ease);
+
+/* Gully flying across the page — fixed to viewport, triggered from app.js */
+.gully-flyby{
+  position:fixed; top:22vh; left:-120px; z-index:90; pointer-events:none;
+  transition:none; opacity:0;
 }
-.boat-marker .hull{ fill:#5C7C99; }
-.boat-marker .sail{ fill:#F3EEE1; stroke:#C9BFA6; stroke-width:1; }
-.boat-marker .patch-a{ fill:#8FA3AE; }
-.boat-marker .patch-b{ fill:#C9A46C; }
-.boat-marker .mast{ stroke:#5C4A38; stroke-width:2; }
-.boat-marker.bob{ animation: boatBob 4s ease-in-out infinite; }
-@keyframes boatBob{ 0%,100%{ transform:translateY(0) rotate(-1.5deg);} 50%{ transform:translateY(-8px) rotate(1.5deg);} }
+.gully-flyby.flying{
+  animation: gullyFlyAcross 4.5s ease-in-out forwards;
+}
+.gully-flyby-inner{ width:74px; }
+.gully-flyby-inner img{ width:100%; height:auto; display:block; filter:drop-shadow(0 8px 12px rgba(0,0,0,.22)); animation:gullyFlap .9s ease-in-out infinite; }
+@keyframes gullyFlap{ 0%,100%{ transform:translateY(0) rotate(-3deg); } 50%{ transform:translateY(-6px) rotate(3deg); } }
+@keyframes gullyFlyAcross{
+  0%   { opacity:0; transform:translate(0,0) rotate(-6deg); }
+  8%   { opacity:1; }
+  50%  { transform:translate(calc(50vw - 35px), -60px) rotate(4deg); }
+  92%  { opacity:1; }
+  100% { opacity:0; transform:translate(calc(100vw + 120px), 30px) rotate(-4deg); }
+}
+
+/* Hidden shell — findable, not obviously a button */
+.hidden-shell{
+  position:absolute; bottom:40px; right:8%; z-index:6; background:none; border:none; padding:8px;
+  cursor:pointer; opacity:.55; transition:opacity .3s var(--ease), transform .3s var(--ease);
+  animation: shellGlint 5s ease-in-out infinite;
+}
+.hidden-shell:hover, .hidden-shell:focus-visible{ opacity:1; transform:scale(1.15) rotate(-8deg); }
+@keyframes shellGlint{ 0%,100%{ filter:brightness(1); } 50%{ filter:brightness(1.25); } }
+.shell-reveal{
+  position:fixed; inset:0; z-index:210; display:flex; align-items:center; justify-content:center; padding:20px;
+  background:rgba(22,41,44,.5); backdrop-filter:blur(2px);
+}
+.shell-reveal[hidden]{ display:none; }
+.shell-reveal-card{
+  background:#fff; border-radius:var(--radius-lg); padding:32px 30px; max-width:360px; text-align:center;
+  box-shadow:0 30px 60px rgba(0,0,0,.35); animation:popIn .3s var(--ease); cursor:pointer;
+}
+.shell-reveal-card p{ font-family:'Fredoka',sans-serif; font-size:1.1rem; color:var(--teal-dark); margin:0; }
 
 .chapter-divider{
   display:flex; align-items:center; justify-content:center; gap:16px;
@@ -190,91 +232,187 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .chapter-divider span.label{ font-family:'Fredoka',sans-serif; font-size:.85rem; letter-spacing:.08em; text-transform:uppercase; }
 
 /* ============================================================
-   HERO
+   HERO — full-width cinematic video, graceful illustrated fallback
    ============================================================ */
-#hero{
-  min-height:88vh; display:flex; flex-direction:column; justify-content:center;
-  background:linear-gradient(180deg,#EAF2EF 0%, #DCEAE6 55%, var(--cream) 100%);
-  overflow:hidden; padding-top:40px;
+.hero-video-section{
+  position:relative; min-height:92vh; display:flex; align-items:flex-end;
+  overflow:hidden; padding-top:0; padding-bottom:80px;
 }
-.hero-inner{ display:flex; align-items:center; gap:48px; flex-wrap:wrap; position:relative; z-index:2; }
-.hero-copy{ flex:1 1 380px; }
-.hero-copy h1{ font-size:clamp(2.3rem,5vw,3.5rem); line-height:1.05; color:var(--teal-dark); }
-.hero-copy h1 span{ color:var(--rust); }
-.hero-copy p{ font-size:1.15rem; margin:18px 0 0; max-width:44ch; }
-.hero-scene{ flex:1 1 340px; position:relative; text-align:center; }
-.hero-scene svg{ max-width:380px; margin:0 auto; }
-.hero-bubble{
-  opacity:0; transform:translateY(10px) scale(.96); transition:opacity .5s var(--ease), transform .5s var(--ease);
-  margin-top:16px; text-align:left; position:relative; background:#fff; border-radius:18px; padding:16px 20px;
-  font-family:'Fredoka',sans-serif; color:var(--teal-dark); box-shadow:0 6px 20px rgba(0,0,0,.08); max-width:340px; margin-inline:auto;
+.hero-media{ position:absolute; inset:0; z-index:0; }
+.hero-bg-video{ width:100%; height:100%; object-fit:cover; display:block; }
+.hero-fallback-scene{ position:absolute; inset:0; background:linear-gradient(180deg,#EAF2EF 0%, #DCEAE6 55%, var(--cream) 100%); overflow:hidden; }
+.hero-sky{ position:absolute; inset:0; }
+.hero-koa-scene{ position:absolute; right:6%; bottom:8%; width:min(360px, 40vw); z-index:1; }
+.hero-scrim{
+  position:absolute; inset:0; z-index:1;
+  background:linear-gradient(0deg, rgba(15,28,30,.88) 0%, rgba(15,28,30,.55) 45%, rgba(15,28,30,.18) 75%);
 }
-.hero-bubble.show{ opacity:1; transform:translateY(0) scale(1); }
-.sound-hint{ font-size:.8rem; color:var(--teal); margin-top:10px; opacity:.8; }
+.hero-overlay{ position:relative; z-index:2; color:#fff; max-width:520px; margin-bottom:17vh; }
+
+/* The Welcome — dialogue, not a headline. No box, no bubble tail, no background —
+   just text sitting in the scene, readable because of the scrim already behind it. */
+.hero-greeting{
+  font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(1.35rem,3.2vw,2rem);
+  color:#fff; line-height:1.35; max-width:18ch; text-shadow:0 3px 16px rgba(0,0,0,.45);
+  opacity:0; transform:translateY(14px); transition:opacity .45s var(--ease), transform .45s var(--ease);
+}
+.hero-greeting.in{ opacity:1; transform:translateY(0); }
+
+.hero-sound-toggle{
+  position:absolute; right:24px; bottom:24px; z-index:3; width:42px; height:42px; border-radius:50%;
+  background:rgba(15,28,30,.55); border:1.5px solid rgba(255,255,255,.35); color:#fff; font-size:1.05rem;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s var(--ease);
+}
+.hero-sound-toggle:hover{ background:rgba(15,28,30,.75); }
+
 .tide{ position:absolute; left:0; right:0; bottom:-2px; height:200px; z-index:1; pointer-events:none; }
 .tide svg{ width:100%; height:100%; display:block; }
 .tide-wave{ animation:tideshift 9s ease-in-out infinite; transform-origin:center bottom; }
 @keyframes tideshift{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(10px);} }
-.cloud{ position:absolute; top:10%; opacity:.5; pointer-events:none; z-index:0; }
+.cloud{ position:absolute; top:10%; opacity:.6; pointer-events:none; z-index:0; }
 .cloud-a{ left:-6%; animation:driftRight 40s linear infinite; }
 .cloud-b{ left:42%; top:18%; transform:scale(.65); animation:driftRight 54s linear infinite; animation-delay:-18s; }
 .cloud-c{ left:72%; top:6%; transform:scale(.5); animation:driftRight 48s linear infinite; animation-delay:-30s; }
 @keyframes driftRight{ from{transform:translateX(0) scale(var(--s,1));} to{transform:translateX(120vw) scale(var(--s,1));} }
 .scroll-cue{
-  position:absolute; left:50%; bottom:22px; transform:translateX(-50%); z-index:2;
-  display:flex; flex-direction:column; align-items:center; gap:4px; color:var(--teal-dark); opacity:.7;
-  font-size:.75rem; font-family:'Fredoka',sans-serif; animation:bounceCue 2.2s ease-in-out infinite;
+  position:absolute; left:50%; bottom:26px; transform:translateX(-50%); z-index:2;
+  color:#fff; font-size:1.4rem; line-height:1; opacity:0; transition:opacity .5s var(--ease);
 }
+.scroll-cue.in{ opacity:.7; animation:bounceCue 2.2s ease-in-out infinite; }
 @keyframes bounceCue{ 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(8px);} }
 
-/* ---------- COLD OPEN ---------- */
-#cold-open{ background:var(--cream); }
-.cold-open-grid{ display:flex; align-items:center; gap:44px; flex-wrap:wrap; }
-.cold-open-art{ flex:1 1 300px; }
-.cold-open-copy{ flex:1 1 340px; }
-.cold-open-copy h2{ font-size:clamp(1.6rem,3.4vw,2.2rem); color:var(--teal-dark); }
-.cold-open-copy p{ font-size:1.05rem; margin-top:14px; }
-.gully-gag{ position:relative; }
-.gully-gag .gag-note{
-  position:absolute; font-family:'Fredoka',sans-serif; font-size:.8rem; background:#fff; padding:6px 12px;
-  border-radius:999px; box-shadow:0 4px 10px rgba(0,0,0,.1); color:var(--teal-dark); opacity:0; transition:opacity .4s var(--ease);
+@media (max-width:640px){
+  .hero-video-section{ min-height:80vh; padding-bottom:56px; }
+  .hero-overlay{ margin-bottom:12vh; }
+  .hero-koa-scene{ opacity:.5; width:60vw; right:-4%; }
+  .hero-sound-toggle{ right:16px; bottom:16px; }
 }
-.gully-gag:hover .gag-note, .gully-gag:focus-within .gag-note{ opacity:1; }
 
-/* ---------- CREW TEASER (shore lineup) ---------- */
-#crew-teaser{ background:var(--teal-dark); color:var(--cream); padding-bottom:0; }
-#crew-teaser .wrap{ text-align:center; }
-.shore{ position:relative; margin-top:36px; background:linear-gradient(180deg,var(--teal-dark) 0%, var(--teal-deep) 40%, #7EB6B0 40%, #E7D9B8 100%); }
-.shore-line{ display:flex; justify-content:center; align-items:flex-end; gap:18px; flex-wrap:wrap; padding:56px 20px 40px; max-width:1000px; margin:0 auto; }
-.crew-mini{ display:flex; flex-direction:column; align-items:center; gap:8px; text-decoration:none; color:inherit; }
-.crew-mini .avatar{ border-radius:50%; box-shadow:0 8px 16px rgba(0,0,0,.25); transition:transform .3s var(--ease); }
-.crew-mini:hover .avatar, .crew-mini:focus-visible .avatar{ transform:translateY(-6px) scale(1.05); }
-.crew-mini span{ font-family:'Fredoka',sans-serif; font-size:.85rem; color:#fff; }
-.crew-mini.gully .avatar{ width:44px; height:44px; }
-.crew-mini:not(.gully) .avatar{ width:88px; height:88px; }
-.shore-caption{ padding:18px 24px 56px; font-size:.95rem; color:#3a2f22; text-align:center; }
+/* ---------- CHOOSE YOUR ADVENTURE — three doorways into three worlds ---------- */
+#choose-adventure{ background:var(--cream); }
+.doorways{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:40px 32px;
+  max-width:960px; margin:0 auto; padding-top:44px;
+}
+.doorway{
+  display:block; text-decoration:none; color:inherit; text-align:center;
+  transition:transform .35s var(--ease);
+}
+.doorway:hover, .doorway:focus-visible{ transform:translateY(-8px); }
 
-/* ---------- EXPLORE / MAP TEASER ---------- */
-#explore-teaser{ background:var(--cream); }
-.map-frame{
-  position:relative; background:linear-gradient(160deg,#DCEAE6,#C6DDD6);
-  border-radius:var(--radius-lg); overflow:hidden; aspect-ratio:16/10; box-shadow:var(--shadow-card);
+/* The arch is a window into the destination — the scene fills it, the friend stands in it */
+.doorway-arch{
+  position:relative; overflow:hidden; aspect-ratio:3/3.8;
+  border-radius:999px 999px 22px 22px;
+  border:7px solid #fff; box-shadow:0 18px 38px rgba(22,41,44,.18);
+  transition:box-shadow .35s var(--ease);
 }
-.map-pin{
-  position:absolute; transform:translate(-50%,-100%); display:flex; flex-direction:column; align-items:center; gap:4px;
-  text-decoration:none; color:var(--teal-dark); cursor:pointer;
+.doorway:hover .doorway-arch, .doorway:focus-visible .doorway-arch{
+  box-shadow:0 26px 48px rgba(22,41,44,.26);
 }
-.map-pin .dot{ width:14px; height:14px; border-radius:50%; background:var(--teal); box-shadow:0 0 0 5px rgba(74,122,122,.25); }
-.map-pin.live .dot{ animation: pinPulse 2.4s ease-in-out infinite; }
-.map-pin.planned .dot{ background:#B9C6C2; box-shadow:0 0 0 4px rgba(185,198,194,.3); }
-@keyframes pinPulse{ 0%,100%{ box-shadow:0 0 0 5px rgba(74,122,122,.25);} 50%{ box-shadow:0 0 0 9px rgba(74,122,122,.12);} }
-.map-pin .tip{
-  font-family:'Fredoka',sans-serif; font-size:.7rem; background:#fff; padding:3px 9px; border-radius:999px;
-  box-shadow:0 3px 8px rgba(0,0,0,.12); white-space:nowrap; opacity:0; transform:translateY(4px); transition:opacity .25s, transform .25s;
+.doorway-scene{ position:absolute; inset:0; width:100%; height:100%; }
+
+/* Warm light washes through on hover — the door "opening" */
+.doorway-glow{
+  position:absolute; inset:0; opacity:0; transition:opacity .45s var(--ease);
+  background:radial-gradient(ellipse 90% 70% at 50% 45%, rgba(255,243,214,.55) 0%, rgba(255,243,214,0) 70%);
   pointer-events:none;
 }
-.map-pin:hover .tip, .map-pin:focus-visible .tip{ opacity:1; transform:translateY(0); }
-#boat-transit{ position:absolute; z-index:3; pointer-events:none; transform:translate(-50%,-50%); }
+.doorway:hover .doorway-glow, .doorway:focus-visible .doorway-glow{ opacity:1; }
+
+/* The friend, standing in the doorway looking out */
+.doorway-friend{
+  position:absolute; bottom:-4px; left:50%; transform:translateX(-50%);
+  width:62%; transition:transform .35s var(--ease);
+}
+.doorway-friend img, .doorway-friend svg{ width:100%; height:auto; display:block; border-radius:0; }
+.doorway:hover .doorway-friend, .doorway:focus-visible .doorway-friend{ transform:translateX(-50%) translateY(-7px); }
+.doorway-friend-circle{
+  width:52%; aspect-ratio:1/1; border-radius:50%; overflow:hidden; bottom:14px;
+  border:5px solid rgba(255,255,255,.9); box-shadow:0 10px 22px rgba(0,0,0,.25);
+}
+
+.doorway-label{ margin-top:18px; }
+.doorway-place{
+  display:block; font-family:'Fredoka',sans-serif; font-weight:700; font-size:1.35rem; color:var(--teal-dark);
+}
+.doorway-meet{
+  display:block; margin-top:2px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:.95rem; color:var(--rust);
+}
+
+@media (max-width:640px){
+  .doorways{ grid-template-columns:1fr; max-width:340px; gap:44px; }
+}
+
+/* ---------- CREW SHOWCASE — large portraits, the emotional heart of the brand ---------- */
+#crew-teaser{ background:var(--teal-dark); color:var(--cream); }
+#crew-teaser .wrap{ text-align:center; }
+.crew-showcase{
+  display:flex; justify-content:center; align-items:flex-end; gap:28px; flex-wrap:wrap;
+  max-width:800px; margin:48px auto 0; padding:0 24px;
+}
+.crew-card{
+  display:flex; flex-direction:column; align-items:center; gap:6px; text-decoration:none; color:inherit;
+  width:180px; transition:transform .3s var(--ease);
+}
+.crew-card:hover, .crew-card:focus-visible{ transform:translateY(-10px); }
+.crew-card-portrait{
+  width:180px; height:180px; border-radius:50%; overflow:hidden; box-shadow:0 16px 32px rgba(0,0,0,.28);
+  border:5px solid rgba(255,255,255,.9); transition:box-shadow .3s var(--ease);
+}
+.crew-card:hover .crew-card-portrait, .crew-card:focus-visible .crew-card-portrait{ box-shadow:0 22px 40px rgba(0,0,0,.36); }
+.crew-card.gully{ width:110px; align-self:flex-end; margin-bottom:12px; }
+.crew-card.gully .crew-card-portrait{ width:110px; height:110px; border-width:4px; }
+.crew-card.gully .crew-card-portrait{ animation: gullyWobble 2.6s ease-in-out infinite; }
+@keyframes gullyWobble{ 0%,100%{ transform:rotate(-6deg) translateY(0); } 50%{ transform:rotate(6deg) translateY(-4px); } }
+.crew-card.koa-lead{ width:240px; order:-1; }
+.crew-card.koa-lead .crew-card-portrait{
+  width:240px; height:240px; border-width:7px; box-shadow:0 20px 40px rgba(0,0,0,.32), 0 0 0 6px rgba(217,164,65,.25);
+}
+.crew-card.koa-lead .crew-card-name{ font-size:1.3rem; }
+.crew-card-name{ font-family:'Fredoka',sans-serif; font-weight:600; color:#fff; font-size:1.1rem; margin-top:6px; }
+.crew-card-role{ font-size:.82rem; color:#B9D3CE; text-align:center; }
+@media (max-width:640px){
+  .crew-card{ width:130px; }
+  .crew-card-portrait{ width:130px; height:130px; }
+  .crew-card.gully{ width:84px; }
+  .crew-card.gully .crew-card-portrait{ width:84px; height:84px; }
+  .crew-card.koa-lead{ width:170px; }
+  .crew-card.koa-lead .crew-card-portrait{ width:170px; height:170px; }
+}
+
+/* ============================================================
+   PUBLISHED ADVENTURES — polished destination cards (replaces the
+   retired Adventure Atlas — see PRODUCTION REFERENCE decision below)
+   ============================================================ */
+.published-adventures{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:36px;
+}
+.published-card{
+  display:flex; flex-direction:column; background:#fff; border-radius:var(--radius-lg);
+  overflow:hidden; text-decoration:none; color:inherit; box-shadow:0 14px 34px rgba(22,41,44,.14);
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.published-card:hover, .published-card:focus-visible{
+  transform:translateY(-10px); box-shadow:0 22px 46px rgba(22,41,44,.22);
+}
+.published-card-art{ position:relative; aspect-ratio:4/3; }
+.published-card-body{ padding:26px 28px 30px; display:flex; flex-direction:column; gap:10px; flex-grow:1; }
+.published-card-body .status-chip{ align-self:flex-start; }
+.published-card-body h2{
+  font-family:'Fredoka',sans-serif; font-weight:700; font-size:1.5rem; color:var(--teal-dark); margin-top:2px;
+}
+.published-card-body p{ margin:0; color:#555; font-size:1rem; line-height:1.5; flex-grow:1; }
+.published-card-cta{
+  font-family:'Fredoka',sans-serif; font-weight:700; color:var(--teal); font-size:1rem; margin-top:6px;
+  transition:transform .2s var(--ease), color .2s var(--ease);
+}
+.published-card:hover .published-card-cta{ color:var(--rust); transform:translateX(4px); }
+@media (max-width:640px){
+  .published-card-body h2{ font-size:1.3rem; }
+}
+
+@keyframes popIn{ from{ opacity:0; transform:scale(.94) translateY(10px); } to{ opacity:1; transform:scale(1) translateY(0); } }
 
 /* ---------- WATCH ---------- */
 #watch-teaser{ background:var(--teal-dark); color:#fff; }
@@ -331,6 +469,33 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .book-card:hover{ transform:translateY(-8px) rotate(-1deg); box-shadow:var(--shadow-card-hover); }
 .book-cover{ aspect-ratio:1/1; border-radius:12px; overflow:hidden; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Fredoka',sans-serif; text-align:center; padding:14px; }
+
+/* Real book-cover design (title, series number, page-edge) — not a flat placeholder tile.
+   Same colour language as the Choose Your Adventure doorways, so a book and its
+   destination read as the same world across the site. */
+.book-cover-design{
+  position:relative; width:100%; height:100%; display:flex; flex-direction:column;
+  justify-content:space-between; padding:22px 20px; overflow:hidden; text-align:left;
+}
+.book-cover-number{
+  font-family:'Fredoka',sans-serif; font-weight:600; font-size:.68rem; letter-spacing:.08em;
+  text-transform:uppercase; color:rgba(255,255,255,.8);
+}
+.book-cover-title{
+  font-family:'Fredoka',sans-serif; font-weight:700; font-size:1.5rem; line-height:1.2;
+  color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.22); padding-right:12px;
+}
+.book-cover-pages{
+  position:absolute; top:10px; bottom:10px; right:6px; width:5px; border-radius:2px; opacity:.55;
+  background:repeating-linear-gradient(180deg, rgba(255,255,255,.55) 0, rgba(255,255,255,.55) 2px, transparent 2px, transparent 6px);
+}
+.book-cover-byron-bay{ background:linear-gradient(160deg,#D98A4E 0%, #B8622F 100%); }
+.book-cover-hawaii{ background:linear-gradient(160deg,#E0693F 0%, #A83E2C 100%); }
+.book-cover-solomon-islands{ background:linear-gradient(160deg,#3E8C7C 0%, #1F5B4E 100%); }
+.book-cover-design:not(.book-cover-byron-bay):not(.book-cover-hawaii):not(.book-cover-solomon-islands){
+  background:linear-gradient(160deg,#4A7A7A 0%, #1F3438 100%);
+}
+
 .book-card h3{ font-size:1.1rem; color:var(--teal-dark); }
 .book-card p{ margin:0; font-size:.92rem; color:#555; flex-grow:1; }
 .tag-soon{ font-family:'Fredoka',sans-serif; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; background:var(--mustard); color:#3a2f10; padding:4px 10px; border-radius:999px; align-self:flex-start; }
@@ -351,22 +516,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .dyk h3{ font-size:1.05rem; color:#fff; margin-bottom:4px; }
 .dyk p{ margin:0; color:#E4F0EC; }
 
-/* ---------- RANGERS TEASER ---------- */
-#rangers-teaser{ background:var(--cream); text-align:center; }
-.badge-row{ display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin:36px 0; }
-.badge{ flex:1 1 200px; max-width:220px; text-align:center; background:#fff; border-radius:16px; padding:22px 16px; box-shadow:var(--shadow-card); transition:transform .3s var(--ease); }
-.badge:hover{ transform:translateY(-6px); }
-.badge .patch{ width:68px; height:68px; border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:600; color:#fff; font-size:1.3rem; box-shadow:inset 0 0 0 4px rgba(255,255,255,.35); }
-.patch.bronze{ background:#B0703A; } .patch.silver{ background:#9AA6AC; } .patch.gold{ background:var(--mustard); }
-.badge h3{ font-size:1rem; color:var(--teal-dark); margin-bottom:4px; }
-.badge p{ margin:0; font-size:.88rem; color:#666; }
-
 /* ---------- SHOP / BEACH SHACK ---------- */
 #shop-teaser{ background:var(--cream-deep); }
 .shop-row{ display:flex; gap:24px; flex-wrap:wrap; }
-.shop-card{ flex:1 1 280px; background:#fff; border-radius:var(--radius); padding:26px; box-shadow:var(--shadow-card); display:flex; flex-direction:column; gap:10px; }
+.shop-card{ flex:1 1 280px; background:linear-gradient(160deg,#fff,#FBF6EB); border-radius:var(--radius); padding:30px 26px; box-shadow:var(--shadow-card); display:flex; flex-direction:column; align-items:center; gap:8px; }
+.shop-card-icon{ opacity:.85; margin-bottom:2px; }
 .shop-card h3{ color:var(--teal-dark); font-size:1.2rem; }
-.shop-card p{ margin:0; color:#555; flex-grow:1; }
+.shop-card p{ margin:0; color:#555; }
 
 /* ---------- FOLLOW ---------- */
 #follow{ background:var(--cream); text-align:center; }
@@ -406,7 +562,7 @@ footer.site-footer{ background:var(--teal-dark); color:#CFE3DF; padding:44px 0 2
 
 .detail-hero{ display:flex; gap:40px; flex-wrap:wrap; align-items:center; padding:56px 0; }
 .detail-art{ flex:1 1 280px; }
-.detail-art .art-frame{ aspect-ratio:1/1; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-card); }
+.detail-art .art-frame{ aspect-ratio:1/1; border-radius:var(--radius-lg); overflow:hidden; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-card); }
 .detail-copy{ flex:1 1 340px; }
 .detail-copy .role{ color:var(--teal); font-family:'Fredoka',sans-serif; font-weight:600; margin-top:4px; }
 .detail-copy p.bio{ margin-top:16px; font-size:1.05rem; }
@@ -430,5 +586,57 @@ footer.site-footer{ background:var(--teal-dark); color:#CFE3DF; padding:44px 0 2
 
 @media (max-width:640px){
   .grid-cards{ grid-template-columns:repeat(2,1fr); }
-  section{ padding:56px 0; }
+  section{ padding:72px 0; }
+}
+
+/* ---------- WHERE SHOULD WE GO NEXT? ---------- */
+#where-next{ background:var(--cream); }
+.next-adventures{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; padding-top:36px; }
+.next-card{
+  background:#fff; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-card);
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.next-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-card-hover); }
+.next-card-art{ aspect-ratio:4/3; }
+.next-card-art img{ width:100%; height:100%; object-fit:cover; display:block; }
+.next-card-body{ padding:20px 22px 24px; }
+.next-card-body h3{ font-family:'Fredoka',sans-serif; font-size:1.25rem; color:var(--teal-dark); }
+.next-card-body p{ margin:6px 0 0; color:#555; font-size:.95rem; }
+
+/* ---------- CHARACTER WELCOMES (V3) ---------- */
+.friend-welcome{ display:flex; gap:16px; align-items:flex-start; margin-top:14px; }
+.friend-welcome-face{ width:76px; height:auto; flex:0 0 auto; filter:drop-shadow(0 6px 10px rgba(0,0,0,.18)); }
+.friend-welcome-speech{
+  background:#fff; border-radius:18px; padding:16px 20px; margin:0; color:var(--teal-dark);
+  font-family:'Fredoka',sans-serif; font-weight:500; font-size:1.05rem; line-height:1.5;
+  box-shadow:var(--shadow-card); position:relative;
+}
+.friend-welcome-speech::before{
+  content:''; position:absolute; left:-8px; top:26px;
+  border:8px solid transparent; border-right-color:#fff; border-left:0;
+}
+.scene-frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+.character-greeting{
+  font-family:'Fredoka',sans-serif; font-weight:500; font-size:1.1rem; color:var(--teal-dark);
+  line-height:1.55; margin-top:10px;
+}
+@media (max-width:640px){
+  .friend-welcome{ flex-direction:column; }
+  .friend-welcome-face{ width:64px; }
+  .friend-welcome-speech::before{ display:none; }
+}
+
+.vote-block{ text-align:center; margin-top:40px; }
+.vote-block h3{ font-family:'Fredoka',sans-serif; font-size:1.3rem; color:var(--teal-dark); }
+.vote-block p{ max-width:56ch; margin:10px auto 0; color:#555; }
+.vote-links{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px; }
+
+/* ---------- THE VOYAGE ---------- */
+.voyage-art{ max-width:960px; margin:36px auto 0; border-radius:var(--radius-lg); overflow:hidden; box-shadow:0 20px 44px rgba(22,41,44,.2); }
+.voyage-art img{ width:100%; height:auto; display:block; }
+.voyage-discoveries{ margin-top:32px; }
+.voyage-tags{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; max-width:760px; margin:0 auto; }
+.voyage-tags span{
+  background:#fff; border-radius:999px; padding:8px 16px; font-family:'Fredoka',sans-serif;
+  font-size:.9rem; color:var(--teal-dark); box-shadow:var(--shadow-card);
 }

@@ -12,18 +12,28 @@ eleventyComputed:
 ---
 {% from "partials/related.njk" import block as relatedBlock %}
 {% from "partials/video-card.njk" import card as videoCard %}
+{% from "partials/art.njk" import character as characterArt %}
 <div class="wrap">
   <a href="/crew/" class="btn ghost small" style="margin-top:24px;">← All of the crew</a>
 
   <div class="detail-hero">
     <div class="detail-art reveal in">
-      <div class="art-frame" style="background:{{ character.swatch }};">{% characterAvatar character, 220 %}</div>
+      {% set scene = characterScenePath(character) %}
+      {% if scene %}
+      <div class="art-frame scene-frame"><img src="{{ scene }}" alt="{{ character.name }} at home in {{ character.home }}"></div>
+      {% else %}
+      <div class="art-frame" style="background:{{ character.swatch }};">{{ characterArt(character, 220) }}</div>
+      {% endif %}
     </div>
     <div class="detail-copy reveal in">
       <span class="eyebrow">{{ character.species }}</span>
       <h1>{{ character.name }}</h1>
       <p class="role">{{ character.role }}</p>
+      {% if character.greeting %}
+      <p class="character-greeting">&ldquo;{{ character.greeting }}&rdquo;</p>
+      {% else %}
       <p class="bio">{{ character.bio }}</p>
+      {% endif %}
     </div>
   </div>
 
@@ -40,7 +50,7 @@ eleventyComputed:
     <ul class="fun-facts">
       {% for f in character.funFacts %}<li>{{ f }}</li>{% endfor %}
     </ul>
-    <p><a href="/play/#passports" class="btn small">Download {{ character.name }}'s Passport</a></p>
+    <p><a href="/activities/#passports" class="btn small">Download {{ character.name }}'s Passport</a></p>
   {% endif %}
 
   {% set relatedVideos = videosFor(videos, { characterSlug: character.slug }) %}

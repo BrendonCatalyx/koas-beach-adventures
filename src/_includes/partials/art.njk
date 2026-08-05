@@ -1,0 +1,31 @@
+{% macro character(character, size) %}
+{% set artPath = characterArtPath(character) %}
+{% if artPath %}
+<img src="{{ artPath }}" alt="{{ character.name }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+{% else %}
+{% characterAvatar character, size %}
+{% endif %}
+{% endmacro %}
+
+{% macro destination(destination, seedColor) %}
+{% set artPath = destinationArtPath(destination) %}
+{% set color = seedColor or "#4A7A7A" %}
+{% if artPath %}
+<img src="{{ artPath }}" alt="{{ destination.name }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+{% else %}
+{% tileArt color, destination.name %}
+{% endif %}
+{% endmacro %}
+
+{% macro book(book, seedColor) %}
+{% set artPath = bookArtPath(book) %}
+{% if artPath %}
+<img src="{{ artPath }}" alt="{{ book.title }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+{% else %}
+<div class="book-cover-design book-cover-{{ book.destinationSlug }}">
+  <span class="book-cover-number">Book {{ book.seriesNumber }}</span>
+  <span class="book-cover-title">{{ book.title }}</span>
+  <span class="book-cover-pages" aria-hidden="true"></span>
+</div>
+{% endif %}
+{% endmacro %}

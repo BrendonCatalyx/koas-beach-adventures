@@ -14,35 +14,53 @@ eleventyComputed:
 ---
 {% from "partials/related.njk" import block as relatedBlock %}
 {% from "partials/video-card.njk" import card as videoCard %}
+{% from "partials/art.njk" import destination as destinationArt %}
 <div class="wrap">
-  <a href="/world/" class="btn ghost small" style="margin-top:24px;">← The whole map</a>
+  <a href="/world/" class="btn ghost small" style="margin-top:24px;">← All destinations</a>
+
+  {% set friend = findBySlug(characters, destination.friendSlug) if destination.friendSlug else null %}
 
   <div class="detail-hero">
     <div class="detail-art reveal in">
-      <div class="art-frame">{% tileArt "#4A7A7A", destination.name %}</div>
+      <div class="art-frame">{{ destinationArt(destination) }}</div>
     </div>
     <div class="detail-copy reveal in">
       <span class="eyebrow">{{ destination.region }}</span>
       <h1>{{ destination.name }}</h1>
-      <span class="status-chip {{ destination.status }}" style="margin-top:8px;">{{ "Live" if destination.status == "live" else ("Coming soon" if destination.status == "in-production" else "Future destination") }}</span>
+      {% if destination.welcome and friend %}
+      <div class="friend-welcome">
+        {% set cutout = characterCutoutPath(friend) %}
+        {% if cutout %}<img class="friend-welcome-face" src="{{ cutout }}" alt="{{ friend.name }}">{% endif %}
+        <p class="friend-welcome-speech">{{ destination.welcome }}</p>
+      </div>
+      {% else %}
       <p class="bio">{{ destination.hook }}</p>
+      {% endif %}
     </div>
   </div>
 
   {% if destination.status == "planned" %}
     <p style="margin:24px 0;">This part of the world hasn't been explored yet — check back when the book publishes.</p>
   {% else %}
+    {% if destination.culture %}
+    <h3>Places we'll visit</h3><p>{{ destination.culture }}</p>
+    {% endif %}
     {% if destination.wildlife and destination.wildlife.length %}
-    <h3>Wildlife to look out for</h3>
+    <h3>Animals we'll meet</h3>
     <ul class="fun-facts">{% for w in destination.wildlife %}<li>{{ w }}</li>{% endfor %}</ul>
     {% endif %}
-    {% if destination.culture %}<h3>The place itself</h3><p>{{ destination.culture }}</p>{% endif %}
     {% if destination.didYouKnow %}
     <div class="dyk" style="margin-top:24px;">
       <div class="badge-icon">{% shell %}</div>
-      <div><h3>Did You Know?</h3><p>{{ destination.didYouKnow }}</p></div>
+      <div><h3>Things we'll learn</h3><p>{{ destination.didYouKnow }}</p></div>
     </div>
     {% endif %}
+    <div class="destination-actions reveal in" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;">
+      {% set destBook = findBySlug(books, destination.bookSlug) if destination.bookSlug else null %}
+      {% if destBook and destBook.status == "live" %}<a href="/books/{{ destBook.slug }}/" class="btn small">📖 Read the story</a>{% endif %}
+      <a href="/activities/#colouring" class="btn ghost small">🎨 Colour with us</a>
+      {% if friend %}<a href="/crew/{{ friend.slug }}/" class="btn ghost small">👋 Meet {{ friend.name }}</a>{% endif %}
+    </div>
   {% endif %}
 
   {% set relatedVideos = videosFor(videos, { destinationSlug: destination.slug }) %}

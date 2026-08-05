@@ -37,11 +37,11 @@ export default [
     slug: "solomon-islands",
     seriesNumber: 3,
     title: "The Thousand Islands",
-    status: "in-production",
+    status: "live",
     destinationSlug: "solomon-islands",
     friendSlug: "boko",
     blurb: "A thousand-island journey — Boko and Guss show Koa a lagoon, a forest, and a dugong who needs their help.",
-    amazonUrl: null
+    amazonUrl: "https://amzn.asia/d/0cMz8rnT"
   },
   { slug: "fiji", seriesNumber: 4, title: "Fiji", status: "planned", destinationSlug: "fiji", friendSlug: "fiji-frog", blurb: "Sea turtles and reefs — coming soon.", amazonUrl: null },
   { slug: "samoa", seriesNumber: 5, title: "Samoa", status: "planned", destinationSlug: "samoa", friendSlug: null, blurb: "Waterfalls and rainforest — coming soon.", amazonUrl: null },

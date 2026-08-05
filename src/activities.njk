@@ -1,8 +1,8 @@
 ---
 layout: layouts/base.njk
-title: Play
-description: Free colouring pages and printable Character Passports.
-permalink: /play/
+title: Activities
+description: Free colouring pages, printables, and activities starring the whole crew.
+permalink: /activities/
 extraStyles: |
   .page-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; }
   .colour-card, .passport-card{ background:#fff; border-radius:var(--radius); padding:18px; box-shadow:var(--shadow-card); display:flex; flex-direction:column; gap:12px; }
@@ -41,7 +41,7 @@ extraStyles: |
 
   <div class="section-head reveal in" style="margin-top:48px;">
     <span class="eyebrow">$2 Each</span>
-    <h2>More to unlock — supports Catalyx One</h2>
+    <h2>More to unlock</h2>
   </div>
   {% set paidPages = [
     { title: "Gully Being Gully", desc: "Mid-flap, mid-mischief.", link: "https://buy.stripe.com/6oU3cv2CH4d5eGI22K33W0c", color: "#DCE4DC" },
@@ -69,19 +69,20 @@ extraStyles: |
     </div>
     <a href="https://buy.stripe.com/14A3cv6SX391gOQgXE33W0h" class="btn accent" target="_blank" rel="noopener">Unlock All 5 — $6</a>
   </div>
-  <p style="max-width:64ch;margin:36px auto 0;text-align:center;font-size:.95rem;color:#6a5c42;">Every $2 (or $6 for the bundle) is a small, real contribution — it helps fund the development of Catalyx One. <a href="/about/#catalyx-one">Read more about Catalyx One →</a></p>
+  <p style="max-width:64ch;margin:36px auto 0;text-align:center;font-size:.95rem;color:#6a5c42;">Every unlock directly supports the creation of Koa's next adventures.</p>
 </section>
 
 <section class="wrap" id="passports">
   <div class="section-head reveal in">
     <span class="eyebrow">Collect</span>
     <h2>Character Passports</h2>
-    <p>Download, print, and colour a passport for every friend you meet. Leave space at the bottom for a Beach Ranger stamp when that's ready.</p>
+    <p>Download, print, and colour a passport for every friend you meet.</p>
   </div>
   <div class="page-grid">
+    {% from "partials/art.njk" import character as characterArt %}
     {% for c in characters %}{% if c.status != "planned" %}
     <div class="passport-card reveal in" data-slug="{{ c.slug }}" id="passport-{{ c.slug }}">
-      <div class="thumb" style="background:{{ c.swatch }};">{% characterAvatar c, 160 %}</div>
+      <div class="thumb" style="background:{{ c.swatch }};">{{ characterArt(c, 160) }}</div>
       <h3 style="color:var(--teal-dark);">{{ c.name }}</h3>
       <div class="fields">
         <span><b>Species:</b> {{ c.species }}</span>

@@ -19,20 +19,33 @@ export default {
   siteUrl: "https://catalyxkids.com.au", // update if the production domain differs
   defaultOgImage: "/assets/ui/social-share-default.jpg", // placeholder — swap once exported
 
+  // ---------- Two-tier navigation ----------
+  // Deliberately split by audience, not just by section. `nav` is what a
+  // CHILD wants — big, exploratory, always visible while scrolling.
+  // `parentNav` is the quieter utility row above it — Shop, About, and
+  // Search all live there instead of competing for space in the main nav.
+  // (This supersedes an earlier version that put Shop as a prominent
+  // button inside the primary nav — kept here as a one-line explanation
+  // since that was an explicit, considered design decision to reverse.)
   nav: [
-    { label: "Explore", href: "/world/" },
-    { label: "Crew",    href: "/crew/" },
-    { label: "Watch",   href: "/watch/" },
-    { label: "Read",    href: "/books/" },
-    { label: "Play",    href: "/play/" },
-    { label: "Rangers", href: "/rangers/" }
+    { label: "Explore",          href: "/world/" },
+    { label: "Meet the Friends", href: "/crew/" },
+    { label: "Books",            href: "/books/" },
+    { label: "Watch",            href: "/watch/" },
+    { label: "Activities",       href: "/activities/" }
   ],
 
-  headerExtra: [
-    { label: "🔍 Search", href: "/search/" },
-    { label: "For Grown-Ups", href: "/learn/" },
-    { label: "🛍️ Beach Shack", href: "/beach-shack/" }
+  parentNav: [
+    { label: "Parents & Teachers", href: "/learn/" },
+    { label: "About", href: "/about/" }
   ],
+
+  // Update these two lines whenever a new destination vote begins — the
+  // homepage voting block reads them directly.
+  currentVote: {
+    question: "Where should Koa travel next?",
+    note: "Vote in our polls on Instagram, TikTok, and YouTube — every vote helps choose Koa's next adventure."
+  },
 
   footer: {
     columns: [
@@ -43,13 +56,13 @@ export default {
           { label: "The Crew", href: "/crew/" },
           { label: "Watch", href: "/watch/" },
           { label: "Read", href: "/books/" },
-          { label: "Play", href: "/play/" }
+          { label: "Activities", href: "/activities/" }
         ]
       },
       {
         heading: "Join In",
         links: [
-          { label: "Beach Rangers", href: "/rangers/" },
+          { label: "Free Activities", href: "/activities/" },
           { label: "Beach Shack", href: "/beach-shack/" }
         ]
       },
@@ -57,9 +70,7 @@ export default {
         heading: "About",
         links: [
           { label: "Who is Koa?", href: "/about/" },
-          { label: "Catalyx One", href: "/about/#catalyx-one" },
-          { label: "Support the Mission", href: "/about/#support" },
-          { label: "For Parents & Teachers", href: "/learn/" }
+          { label: "Parents & Teachers", href: "/learn/" }
         ]
       },
       {
@@ -70,10 +81,12 @@ export default {
         ]
       }
     ],
-    baseNote: "A portion of proceeds funds the development of Catalyx One"
+    baseNote: "Real places. Real animals. Real adventures."
   },
 
   // Placeholder — swap with real profile URLs when available.
+  // Social channels — links with href "#" are HIDDEN site-wide until a real URL
+  // is pasted here (same drop-in-and-it-works pattern as the art system).
   social: [
     { label: "Instagram", icon: "📸", href: "#" },
     { label: "Facebook",  icon: "👍", href: "#" },

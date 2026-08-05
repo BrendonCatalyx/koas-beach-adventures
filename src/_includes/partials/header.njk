@@ -1,23 +1,31 @@
 <header class="site-header">
-  <div class="wrap">
-    <a href="/" class="brand">
-      <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#C9A46C"/></svg>
-      {{ site.siteName }}
-    </a>
-    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
-    <nav class="primary-nav" aria-label="Primary">
-      {% for item in site.nav %}
-      <a href="{{ item.href }}"{% if page.url == item.href %} aria-current="page"{% endif %}>{{ item.label }}</a>
-      {% endfor %}
-    </nav>
-    <div class="header-extra">
+  <div class="utility-bar">
+    <div class="wrap utility-bar-inner">
+      <nav aria-label="For parents and teachers">
+        {% for item in site.parentNav %}<a href="{{ item.href }}">{{ item.label }}</a>{% endfor %}
+      </nav>
       <form action="/search/" method="get" class="header-search" role="search">
         <label for="site-search" class="visually-hidden">Search Koa's world</label>
-        <input id="site-search" name="q" type="search" placeholder="Search Koa's world…">
+        <input id="site-search" name="q" type="search" placeholder="Search…">
       </form>
-      {% for item in site.headerExtra %}
-      <a href="{{ item.href }}" class="icon-link">{{ item.label }}</a>
-      {% endfor %}
+    </div>
+  </div>
+
+  <div class="main-nav-bar">
+    <div class="wrap">
+      <a href="/" class="brand">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#C9A46C"/></svg>
+        {{ site.siteName }}
+      </a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+      <nav class="primary-nav" aria-label="Primary">
+        {% for item in site.nav %}
+        <a href="{{ item.href }}"{% if page.url == item.href %} aria-current="page"{% endif %}>{{ item.label }}</a>
+        {% endfor %}
+        <div class="mobile-only-links">
+          {% for item in site.parentNav %}<a href="{{ item.href }}">{{ item.label }}</a>{% endfor %}
+        </div>
+      </nav>
     </div>
   </div>
 </header>

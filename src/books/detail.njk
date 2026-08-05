@@ -14,12 +14,13 @@ eleventyComputed:
 ---
 {% from "partials/related.njk" import block as relatedBlock %}
 {% from "partials/video-card.njk" import card as videoCard %}
+{% from "partials/art.njk" import book as bookArt %}
 <div class="wrap">
   <a href="/books/" class="btn ghost small" style="margin-top:24px;">← The whole series</a>
 
   <div class="detail-hero">
     <div class="detail-art reveal in">
-      <div class="art-frame">{% tileArt "#1F3438", book.title %}</div>
+      <div class="art-frame">{{ bookArt(book, "#1F3438") }}</div>
     </div>
     <div class="detail-copy reveal in">
       <span class="eyebrow">Book {{ book.seriesNumber }} of 20</span>
@@ -28,6 +29,8 @@ eleventyComputed:
       <p class="bio">{{ book.blurb }}</p>
       {% if book.amazonUrl %}
       <a href="{{ book.amazonUrl }}" class="btn" target="_blank" rel="noopener" style="margin-top:20px;">Get it on Amazon</a>
+      {% elif book.status == "live" %}
+      <a href="#" class="btn ghost" aria-disabled="true" style="margin-top:20px;">Purchase link coming very soon</a>
       {% else %}
       <a href="#" class="btn ghost" aria-disabled="true" style="margin-top:20px;">In the works</a>
       {% endif %}

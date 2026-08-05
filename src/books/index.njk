@@ -12,16 +12,39 @@ permalink: /books/
   </div>
 </div>
 <section class="wrap" style="padding-top:0;">
-  <div class="grid-cards">
-    {% for b in books %}
-    <a href="/books/{{ b.slug }}/" class="entity-card reveal in">
-      <div class="art" style="background:linear-gradient(135deg, var(--teal), var(--teal-dark)); color:#fff; font-family:'Fredoka',sans-serif; text-align:center; padding:16px;">{{ b.title }}</div>
-      <div class="body">
-        <span class="status-chip {{ b.status }}">{{ "Available now" if b.status == "live" else ("Coming soon" if b.status == "in-production" else "In the works") }}</span>
-        <h3>Book {{ b.seriesNumber }} · {{ b.title }}</h3>
+  {% from "partials/art.njk" import book as bookArt %}
+  {% from "partials/art.njk" import destination as destinationArt %}
+  <div class="published-adventures reveal-group reveal">
+    {% for b in books %}{% if b.status == "live" %}
+    <div class="published-card">
+      <a href="/books/{{ b.slug }}/" class="published-card-art" style="display:block;">{{ bookArt(b) }}</a>
+      <div class="published-card-body">
+        <span class="status-chip live">Book {{ b.seriesNumber }}</span>
+        <h2>{{ b.title }}</h2>
         <p>{{ b.blurb }}</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+          <a href="/books/{{ b.slug }}/" class="btn ghost small">Read more</a>
+          {% if b.amazonUrl %}<a href="{{ b.amazonUrl }}" class="btn small" target="_blank" rel="noopener">Buy on Amazon</a>{% endif %}
+        </div>
       </div>
-    </a>
+    </div>
+    {% endif %}{% endfor %}
+  </div>
+
+  <div class="section-head reveal" style="text-align:center;margin:64px auto 0;">
+    <span class="eyebrow">Coming Soon</span>
+    <h2>Koa's next adventures are already being planned</h2>
+  </div>
+  <div class="next-adventures reveal-group reveal" style="max-width:960px;margin:0 auto;">
+    {% for slug in ["fiji", "samoa", "vanuatu"] %}
+    {% set d = findBySlug(destinations, slug) %}
+    <div class="next-card">
+      <div class="next-card-art">{{ destinationArt(d, "#4A7A7A") }}</div>
+      <div class="next-card-body">
+        <h3>{{ d.name }}</h3>
+        <p>{{ d.hook }}</p>
+      </div>
+    </div>
     {% endfor %}
   </div>
 </section>

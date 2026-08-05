@@ -43,25 +43,6 @@ function initSoundUnlock(mediaEl, onUnlock){
   ['click','touchstart','scroll','keydown'].forEach(evt => window.addEventListener(evt, unlock, { once:false, passive:true }));
 }
 
-/* ---------- Boat wayfinding marker (homepage chapter transitions) ---------- */
-function initBoatTransit(){
-  const boat = document.getElementById('chapter-boat');
-  const chapters = document.querySelectorAll('[data-chapter]');
-  if(!boat || !chapters.length) return;
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const target = entry.target.querySelector('.chapter-divider .line');
-        if(target){
-          const rect = target.getBoundingClientRect();
-          boat.style.top = `${window.scrollY + rect.top - 20}px`;
-        }
-      }
-    });
-  }, { threshold:.4 });
-  chapters.forEach(c => io.observe(c));
-}
-
 /* ---------- "Did You Know?" — facts are prerendered as JSON, not fetched ---------- */
 function initDidYouKnow(){
   const el = document.getElementById('dyk-widget');
@@ -212,18 +193,110 @@ function initSearchPage(){
   input.addEventListener('input', ()=> paint(input.value));
 }
 
+/* ---------- Gully flying across the page — a real surprise on scroll ---------- */
+function initGullyFlyby(){
+  const gully = document.getElementById('gully-flyby');
+  const chapters = document.querySelectorAll('[data-chapter]');
+  if(!gully || !chapters.length) return;
+  let lastFlight = 0;
+  const cooldownMs = 12000;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const now = Date.now();
+        if(now - lastFlight > cooldownMs && Math.random() < 0.6){
+          lastFlight = now;
+          gully.classList.remove('flying');
+          void gully.offsetWidth; // restart the CSS animation
+          gully.classList.add('flying');
+          setTimeout(()=> gully.classList.remove('flying'), 4600);
+        }
+      }
+    });
+  }, { threshold:.5 });
+  chapters.forEach(c => io.observe(c));
+}
+
+/* ---------- A hidden shell in the sand — findable, rewards curiosity ---------- */
+function initHiddenShell(){
+  const shellBtn = document.getElementById('hidden-shell');
+  const reveal = document.getElementById('shell-reveal');
+  const textEl = document.getElementById('shell-reveal-text');
+  const factsEl = document.getElementById('shell-facts');
+  if(!shellBtn || !reveal || !textEl || !factsEl) return;
+  let facts = [];
+  try { facts = JSON.parse(factsEl.textContent); } catch(e){}
+  function show(){
+    if(!facts.length) return;
+    textEl.textContent = facts[Math.floor(Math.random() * facts.length)];
+    reveal.hidden = false;
+  }
+  function hide(){ reveal.hidden = true; }
+  shellBtn.addEventListener('click', show);
+  reveal.addEventListener('click', hide);
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') hide(); });
+}
+
+
+/* ---------- The Welcome — timed greeting reveal, delayed scroll cue, optional sound toggle ---------- */
+function initWelcome(){
+  const greeting = document.getElementById('hero-greeting');
+  const scrollCue = document.getElementById('scroll-cue');
+  const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if(greeting){
+    if(reducedMotion){
+      greeting.classList.add('in');
+    } else {
+      setTimeout(()=> greeting.classList.add('in'), 1300);
+    }
+  }
+  if(scrollCue){
+    if(reducedMotion){
+      scrollCue.classList.add('in');
+    } else {
+      setTimeout(()=> scrollCue.classList.add('in'), 1900);
+    }
+  }
+
+  // Sound control only exists in the DOM when a real voice file was detected at build time —
+  // nothing to wire up otherwise, and nothing silently broken either.
+  const toggle = document.getElementById('hero-sound-toggle');
+  const audio = document.getElementById('hero-voice');
+  if(toggle && audio){
+    let playing = false;
+    toggle.addEventListener('click', ()=>{
+      playing = !playing;
+      if(playing){
+        audio.currentTime = 0;
+        audio.play().catch(()=>{});
+        toggle.textContent = '🔊';
+        toggle.setAttribute('aria-pressed', 'true');
+        toggle.setAttribute('aria-label', "Mute Koa's voice");
+      } else {
+        audio.pause();
+        toggle.textContent = '🔇';
+        toggle.setAttribute('aria-pressed', 'false');
+        toggle.setAttribute('aria-label', "Play Koa's voice");
+      }
+    });
+    audio.addEventListener('ended', ()=>{
+      playing = false;
+      toggle.textContent = '🔇';
+      toggle.setAttribute('aria-pressed', 'false');
+      toggle.setAttribute('aria-label', "Play Koa's voice");
+    });
+  }
+}
+
 document.addEventListener('DOMContentLoaded', ()=>{
   initReveal();
   initNavToggle();
-  initBoatTransit();
   initDidYouKnow();
   initSearchPage();
   initLazyVideos();
   initYouTubeFacades();
-
-  const heroBubble = document.getElementById('hero-bubble');
-  if(heroBubble){ setTimeout(()=>heroBubble.classList.add('show'), 1400); }
-
-  const soundHint = document.querySelector('.sound-hint');
-  if(soundHint){ initSoundUnlock(soundHint, (el)=>{ el.style.opacity = '0'; }); }
+  initGullyFlyby();
+  initHiddenShell();
+  initWelcome();
 });
