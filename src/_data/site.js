@@ -14,8 +14,10 @@
 
 export default {
   siteName: "Koa's Beach Adventures",
+  author: "CLMH O'Connor",       // series author — used in metadata
+  publisher: "Catalyx Kids",     // publisher — copyright, legal, metadata only
   tagline: "Explore. Learn. Protect.",
-  defaultDescription: "Books, friends, real places, and real animals — explore Koa's world.",
+  defaultDescription: "Explore the world with Koa through beautifully illustrated children's adventures celebrating wildlife, friendship, geography, culture and caring for our planet.",
   siteUrl: "https://catalyxkids.com.au", // update if the production domain differs
   defaultOgImage: "/assets/ui/social-share-default.jpg", // placeholder — swap once exported
 
