@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-{%- set pageTitle = title + " — " + site.siteName if title else site.siteName %}
+{%- set pageTitle = fullTitle or (title + " — " + site.siteName if title else site.siteName) %}
 {%- set pageDesc = description or site.defaultDescription %}
 {%- set pageUrl = site.siteUrl + page.url %}
 {%- set pageImage = site.siteUrl + (image or site.defaultOgImage) %}
 <title>{{ pageTitle }}</title>
 <meta name="description" content="{{ pageDesc }}">
+<meta name="author" content="{{ site.author }}">
+<meta name="publisher" content="{{ site.publisher }}">
 <link rel="canonical" href="{{ pageUrl }}">
 
 <meta property="og:title" content="{{ pageTitle }}">

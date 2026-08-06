@@ -1,6 +1,6 @@
 Koa's Beach Adventures
-Version 4.0
-Date: 5 August 2026
+Version 4.1
+Date: 6 August 2026
 
 This ZIP contains:
 ✓ Eleventy source project
@@ -9,6 +9,7 @@ This ZIP contains:
 ✓ No compiled _site files included
 
 Included in this version:
+- Branding: site is Koa's Beach Adventures; Catalyx Kids = publisher only (footer, legal, metadata)
 - Real published book covers (Byron Bay / Waves at Waikiki / The Thousand Islands)
 - Corrected titles, back-cover blurbs, and verified Amazon links for all 3 books
 - 11 finished videos placed site-wide with posters; unfinished cards hidden
